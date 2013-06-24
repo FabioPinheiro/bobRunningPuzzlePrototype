@@ -16,15 +16,7 @@ public class GameScreen implements Screen, InputProcessor {
 	//private BobController controller;
 
 	private int width, height; // the width and height of the screen used by the Android touch events.
-
-	@Override
-	public void show(){
-		//world = new World();
-		//renderer = new WorldRenderer(world, false);
-		//controller = new BobController(world);
-		Gdx.input.setInputProcessor(this);
-	}
-
+	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
@@ -32,6 +24,14 @@ public class GameScreen implements Screen, InputProcessor {
 
 		//controller.update(delta);
 		//renderer.render();
+	}
+	
+	@Override
+	public void show(){
+		//world = new World();
+		//renderer = new WorldRenderer(world, false);
+		//controller = new BobController(world);
+		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
