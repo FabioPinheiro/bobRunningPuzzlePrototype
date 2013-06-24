@@ -10,6 +10,7 @@ Java Development Kit (JDK);
 Android SDK;
 Eclipse ADT Plugin;
 Google Web Toolkit;
+libGDX
 
 # libraries:
 Use "gdx-setup-ui.jar"->Update to download libraries for the expected locations.
