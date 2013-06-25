@@ -59,7 +59,7 @@ public class MainMenu implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		atlas = new TextureAtlas("ui/button.pack");
+		atlas = new TextureAtlas("ui/atlas.pack");
 		skin = new Skin(Gdx.files.internal("ui/generalSkin.json"),atlas);
 		
 		table = new Table(skin);
@@ -70,7 +70,7 @@ public class MainMenu implements Screen {
 		buttonPlay.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y){
-				((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen());
+				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelMenuScreen());
 			}
 		});
 		buttonPlay.pad(5);
