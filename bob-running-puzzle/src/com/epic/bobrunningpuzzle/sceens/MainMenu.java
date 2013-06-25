@@ -30,7 +30,7 @@ public class MainMenu implements Screen {
 	private TextureAtlas atlas; //done
 	private Skin skin; //done
 	private Table table; //done
-	private TextButton buttonPlay, buttonExit; //50%
+	private TextButton buttonPlay, buttonExit, buttonHelp; //50%
 	private BitmapFont whiteFont, blackFont, whiteFont_mistral, blackFont_mistral; // done
 	private Label heading,heading_mistral;
 	private TweenManager tweenManager;
@@ -102,7 +102,14 @@ public class MainMenu implements Screen {
 		});
 		buttonPlay.pad(15);
 		
-		
+		buttonHelp = new TextButton("HELP", textButtonStyle);
+		buttonHelp.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y){
+				((Game) Gdx.app.getApplicationListener()).setScreen(new HelpScreen());
+			}
+		});
+		buttonHelp.pad(15);
 		//Creating heading
 		heading = new Label(BobRunningPuzzle.TITLE, new LabelStyle(whiteFont, Color.WHITE));
 		heading_mistral = new Label(BobRunningPuzzle.TITLE, new LabelStyle(whiteFont_mistral, Color.WHITE));
@@ -120,6 +127,9 @@ public class MainMenu implements Screen {
 		table.row();
 		table.add(buttonExit);
 		table.getCell(buttonExit).spaceBottom(10);
+		table.row();
+		table.add(buttonHelp);
+		table.getCell(buttonHelp).spaceBottom(10);
 		
 		table.debug(); //TODO remove later
 		stage.addActor(table);
