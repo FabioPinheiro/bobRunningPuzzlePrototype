@@ -6,6 +6,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Gdx2DPixmap;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,12 +24,17 @@ public class Credits implements Screen{
 	private Stage stage;
 	private Skin skin;
 	private Table table;
+	private SpriteBatch batch;
+	private ParticleEffect effect;
 	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		batch.begin();
+		effect.draw(batch, delta);
+		batch.end();
 		stage.act(delta);
 		stage.draw();
 	}
@@ -42,6 +50,7 @@ public class Credits implements Screen{
 
 	@Override
 	public void show() {
+		batch = new SpriteBatch();
 		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("ui/generalSkin.json"), new TextureAtlas("ui/atlas.pack"));
 		
@@ -75,6 +84,11 @@ public class Credits implements Screen{
 		
 		stage.addActor(table);
 		stage.addActor(window);
+		
+		effect = new ParticleEffect();
+		effect.load(Gdx.files.internal("effects/test.p"), Gdx.files.internal("img"));
+		effect.setPosition(Gdx.graphics.getWidth()/3, Gdx.graphics.getHeight()/3);
+		effect.start();
 	}
 
 	@Override
