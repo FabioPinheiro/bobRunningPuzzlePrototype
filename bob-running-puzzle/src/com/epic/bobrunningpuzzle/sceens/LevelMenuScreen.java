@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -67,21 +68,21 @@ public class LevelMenuScreen implements Screen {
 		buttonBack.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y){
-				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+				stage.addAction(Actions.sequence(Actions.moveTo(0, -stage.getHeight(), .25f), Actions.run(new Runnable() {
+					 @Override
+					 public void run() {
+						 ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+					 }
+				})));
 			}
 		});
 		buttonBack.pad(10);
 		
-		//Puting stuff together
-		table.clear();
-		table.add().width(table.getWidth()/3);
-		table.add("SELECT LEVEL").width(table.getWidth()/3);
-		table.add().width(table.getWidth()/3).row();
-		table.add(scrollPane).expand();
-		table.add(buttonPlay);
-		table.add(buttonBack).bottom().right();
+		setupTable();//Puting stuff together
 		
 		stage.addActor(table);
+		
+		stage.addAction(Actions.sequence(Actions.moveTo(0, stage.getHeight()), Actions.moveTo(0, 0, .25f))); // coming in from top animation
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -19,6 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.tween.ActorAccessor;
+
+//import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class MainMenu implements Screen {
 
@@ -70,7 +73,12 @@ public class MainMenu implements Screen {
 		buttonPlay.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y){
-				((Game) Gdx.app.getApplicationListener()).setScreen(new LevelMenuScreen());
+				stage.addAction(Actions.sequence(Actions.moveTo(0, -stage.getHeight(), .25f), Actions.run(new Runnable() {
+					 @Override
+					 public void run() {
+						((Game) Gdx.app.getApplicationListener()).setScreen(new LevelMenuScreen());
+					 }
+				})));
 			}
 		});
 		buttonPlay.pad(5);
@@ -138,8 +146,9 @@ public class MainMenu implements Screen {
 			.end().start(tweenManager);
 		
 		//table fade.-in
-		Tween.from(table, ActorAccessor.ALPHA, 0.5f).target(0).start(tweenManager);
-		Tween.from(table, ActorAccessor.Y, 0.5f).target(Gdx.graphics.getHeight() / 8).start(tweenManager);
+		stage.addAction(Actions.sequence(Actions.moveTo(0, stage.getHeight()), Actions.moveTo(0, 0, .25f))); // coming in from top animation
+		//Tween.from(table, ActorAccessor.ALPHA, 0.5f).target(0).start(tweenManager);
+		//Tween.from(table, ActorAccessor.Y, 0.5f).target(Gdx.graphics.getHeight() / 8).start(tweenManager);
 		
 		tweenManager.update(Float.MIN_VALUE);
 	}
