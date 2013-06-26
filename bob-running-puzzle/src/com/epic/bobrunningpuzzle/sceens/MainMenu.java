@@ -29,7 +29,7 @@ public class MainMenu implements Screen {
 	private TextureAtlas atlas; //done
 	private Skin skin; //done
 	private Table table; //done
-	private TextButton buttonPlay, buttonExit, buttonHelp; //50%
+	private TextButton buttonPlay, buttonCredits, buttonExit, buttonHelp; //50%
 	private Label heading;
 	private TweenManager tweenManager;
 	
@@ -92,6 +92,20 @@ public class MainMenu implements Screen {
 		});
 		buttonHelp.pad(5);
 		
+		buttonCredits = new TextButton("CREDITS",skin);
+		buttonCredits.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y){
+				stage.addAction(Actions.sequence(Actions.moveTo(0, -stage.getHeight(), .25f), Actions.run(new Runnable() {
+					 @Override
+					 public void run() {
+						((Game) Gdx.app.getApplicationListener()).setScreen(new Credits());
+					 }
+				})));
+			}
+		});
+		
+		
 		buttonExit = new TextButton("EXIT",skin);
 		buttonExit.addListener(new ClickListener(){
 			@Override
@@ -112,6 +126,9 @@ public class MainMenu implements Screen {
 		table.add(buttonPlay);
 		table.getCell(buttonPlay).spaceBottom(10);
 		table.row();
+		table.add(buttonCredits);
+		table.getCell(buttonCredits).spaceBottom(10);
+		table.row();
 		table.add(buttonExit);
 		table.getCell(buttonExit).spaceBottom(10);
 		table.row();
@@ -127,12 +144,13 @@ public class MainMenu implements Screen {
 		
 		//heading color animation
 		Timeline.createSequence().beginSequence()
-			.push(Tween.to(heading, ActorAccessor.RGB, .5f).target(0,0,1))
+			.push(Tween.to(heading, ActorAccessor.RGB, .0f).target(0,0,1))
 			.push(Tween.to(heading, ActorAccessor.RGB, .5f).target(0,1,1))
 			.push(Tween.to(heading, ActorAccessor.RGB, .5f).target(1,0,0))
 			.push(Tween.to(heading, ActorAccessor.RGB, .5f).target(1,1,0))
 			.push(Tween.to(heading, ActorAccessor.RGB, .5f).target(1,0,1))
 			.push(Tween.to(heading, ActorAccessor.RGB, .5f).target(1,1,1))
+			.push(Tween.to(heading, ActorAccessor.RGB, .5f).target(0,0,1))
 			.end().repeat(Tween.INFINITY, 0).start(tweenManager);
 		
 		//heading and button fade-in
