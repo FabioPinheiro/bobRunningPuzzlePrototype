@@ -37,10 +37,10 @@ public class MainMenu implements Screen {
 		
 		Table.drawDebug(stage);
 		
-		tweenManager.update(delta);
-		
 		stage.act(delta);
 		stage.draw();
+		
+		tweenManager.update(delta);
 	}
 
 	@Override
@@ -141,11 +141,12 @@ public class MainMenu implements Screen {
 		Tween.from(table, ActorAccessor.ALPHA, 0.5f).target(0).start(tweenManager);
 		Tween.from(table, ActorAccessor.Y, 0.5f).target(Gdx.graphics.getHeight() / 8).start(tweenManager);
 		
+		tweenManager.update(Float.MIN_VALUE);
 	}
 
 	@Override
 	public void hide() {
-
+		dispose();
 	}
 
 	@Override

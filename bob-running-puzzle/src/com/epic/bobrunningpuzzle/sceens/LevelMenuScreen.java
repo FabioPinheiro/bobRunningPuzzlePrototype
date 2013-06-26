@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -37,8 +38,9 @@ public class LevelMenuScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-
+		stage.setViewport(width, height, false);
+		table.setClip(true); // workaround because Table#setTransform(boolean transform) is not working
+		setupTable();
 	}
 
 	@Override
@@ -71,6 +73,7 @@ public class LevelMenuScreen implements Screen {
 		buttonBack.pad(10);
 		
 		//Puting stuff together
+		table.clear();
 		table.add().width(table.getWidth()/3);
 		table.add("SELECT LEVEL").width(table.getWidth()/3);
 		table.add().width(table.getWidth()/3).row();
@@ -83,26 +86,37 @@ public class LevelMenuScreen implements Screen {
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-
+		dispose();
 	}
 
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-
+		stage.dispose();
+		atlas.dispose();
+		skin.dispose();
+	}
+	
+	// Adds everything in the table and resizes it. In an extra method for easier resizing because of table.getWidth() / 3
+	private void setupTable() {
+		table.clear(); // remove all children so we can add them again
+		table.setBounds(0, 0, stage.getWidth(), stage.getHeight());
+		table.add(new Label("SELECT LEVEL", skin/*, "big"*/)).colspan(3).expandX().spaceBottom(50).row();
+		table.add().width(table.getWidth() / 3); // adding three empty cells just for looks
+		table.add().width(table.getWidth() / 3);
+		table.add().width(table.getWidth() / 3).row();
+		table.add(scrollPane).expandY().top().left();
+		table.add(buttonPlay);
+		table.add(buttonBack).bottom().right();
 	}
 
 }
