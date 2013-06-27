@@ -10,6 +10,7 @@ import com.epic.bobrunningpuzzle.sceens.Splash;
 public class BobRunningPuzzle extends Game {
 	
 	public static final String TITLE = "Bob Running Puzzle", VERSTION = "0.0.0.1";
+	public static final String GAMELOG = "BobRunningPuzzle-LOG", GAMELOG_RENDER = "BobRunningPuzzle-LOG_RENDER";
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Texture texture;

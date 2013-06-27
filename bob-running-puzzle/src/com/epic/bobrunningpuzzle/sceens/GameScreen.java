@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 
 public class GameScreen implements Screen, InputProcessor {
 
@@ -28,6 +29,7 @@ public class GameScreen implements Screen, InputProcessor {
 	
 	@Override
 	public void show(){
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#show()");
 		//world = new World();
 		//renderer = new WorldRenderer(world, false);
 		//controller = new BobController(world);

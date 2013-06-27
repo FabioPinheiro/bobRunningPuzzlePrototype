@@ -58,6 +58,7 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void show() {
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#show()");
 		stage = new Stage();
 		
 		Gdx.input.setInputProcessor(stage);

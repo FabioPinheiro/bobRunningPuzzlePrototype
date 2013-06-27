@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 
 public class LevelMenuScreen implements Screen {
 	
@@ -46,6 +47,7 @@ public class LevelMenuScreen implements Screen {
 
 	@Override
 	public void show() {
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#show()");
 		stage = new Stage();
 		
 		Gdx.input.setInputProcessor(stage);

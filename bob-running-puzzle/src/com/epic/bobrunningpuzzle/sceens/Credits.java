@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 
 public class Credits implements Screen{
 	
@@ -50,6 +51,7 @@ public class Credits implements Screen{
 
 	@Override
 	public void show() {
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#show()");
 		batch = new SpriteBatch();
 		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("ui/generalSkin.json"), new TextureAtlas("ui/atlas.pack"));
