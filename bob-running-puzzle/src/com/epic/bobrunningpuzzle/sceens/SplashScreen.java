@@ -16,7 +16,7 @@ import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.tween.SpriteAccessar;
 
 
-public class Splash implements Screen{
+public class SplashScreen implements Screen{
 
 	private SpriteBatch batch;
 	private Sprite splash;
@@ -55,7 +55,7 @@ public class Splash implements Screen{
 		Tween.to(splash, SpriteAccessar.ALPHA, .5f).target(.5f).repeatYoyo(1, .5f).setCallback(new TweenCallback() {
 			@Override
 			public void onEvent(int type, BaseTween<?> source) {
-				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
 				
 			}
 		}).start(tweenManager);

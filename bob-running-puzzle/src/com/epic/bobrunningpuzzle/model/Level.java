@@ -3,9 +3,10 @@ package com.epic.bobrunningpuzzle.model;
 import java.util.Iterator;
 
 import com.badlogic.gdx.utils.Array;
+import com.epic.bobrunningpuzzle.view.RendererVisitor;
 import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
-public class Level {
+public class Level implements ModelElement{
 	private Array<Surmountable> map = new Array<Surmountable>();
 	private Start start;
 	public Level() {
@@ -39,5 +40,15 @@ public class Level {
 	 */
 	public Iterator<Surmountable> getIterator(){
 		return map.iterator();
+	}
+
+	@Override
+	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
+		//rendererVisitor.drawSurmountable(this);//FIXME
+		Iterator<Surmountable> it =  this.getIterator();
+		while(it.hasNext()){
+			Surmountable el = it.next();
+			el.acceptRendererVisitor(rendererVisitor);
+		}
 	} 
 }

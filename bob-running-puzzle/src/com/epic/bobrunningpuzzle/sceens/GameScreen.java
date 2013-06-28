@@ -9,11 +9,14 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
+import com.epic.bobrunningpuzzle.model.Level;
+import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
 public class GameScreen implements Screen, InputProcessor {
 
 	//private World world;
-	//private WorldRenderer renderer;
+	private Level level;
+	private WorldRenderer renderer;
 	//private BobController controller;
 
 	private int width, height; // the width and height of the screen used by the Android touch events.
@@ -23,22 +26,23 @@ public class GameScreen implements Screen, InputProcessor {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+		level.update(delta);
 		//controller.update(delta);
-		//renderer.render();
+		renderer.render();
 	}
 	
 	@Override
 	public void show(){
 		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#show()");
-		//world = new World();
-		//renderer = new WorldRenderer(world, false);
+		level = new Level();
+		renderer = new WorldRenderer(level, true);
 		//controller = new BobController(world);
 		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		//renderer.setSize(width, height);
+		renderer.setSize(width, height);
 		this.width = width;
 		this.height = height;
 	}

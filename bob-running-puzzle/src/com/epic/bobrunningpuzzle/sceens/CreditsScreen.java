@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 
-public class Credits implements Screen{
+public class CreditsScreen implements Screen{
 	
 	private Stage stage;
 	private Skin skin;
@@ -73,7 +73,7 @@ public class Credits implements Screen{
 				stage.addAction(Actions.sequence(Actions.moveTo(0, -stage.getHeight(), .25f), Actions.run(new Runnable() {
 					 @Override
 					 public void run() {
-						((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+						((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
 					 }
 				})));
 			}

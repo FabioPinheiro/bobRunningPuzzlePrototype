@@ -23,7 +23,7 @@ import com.epic.bobrunningpuzzle.tween.ActorAccessor;
 
 //import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-public class MainMenu implements Screen {
+public class MainMenuScreen implements Screen {
 
 	private Stage stage; //done
 	private TextureAtlas atlas; //done
@@ -100,7 +100,7 @@ public class MainMenu implements Screen {
 				stage.addAction(Actions.sequence(Actions.moveTo(0, -stage.getHeight(), .25f), Actions.run(new Runnable() {
 					 @Override
 					 public void run() {
-						((Game) Gdx.app.getApplicationListener()).setScreen(new Credits());
+						((Game) Gdx.app.getApplicationListener()).setScreen(new CreditsScreen());
 					 }
 				})));
 			}

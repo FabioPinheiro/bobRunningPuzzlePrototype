@@ -65,7 +65,19 @@ public class LevelMenuScreen implements Screen {
 		scrollPane.setScrollingDisabled(true, false);
 		
 		buttonPlay = new TextButton("PLAY",skin);
+		buttonPlay.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y){
+				stage.addAction(Actions.sequence(Actions.moveTo(0, -stage.getHeight(), .25f), Actions.run(new Runnable() {
+					 @Override
+					 public void run() {
+						 ((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen());
+					 }
+				})));
+			}
+		});
 		buttonPlay.pad(10);
+		
 		buttonBack = new TextButton("BACK",skin);
 		buttonBack.addListener(new ClickListener(){
 			@Override
@@ -73,7 +85,7 @@ public class LevelMenuScreen implements Screen {
 				stage.addAction(Actions.sequence(Actions.moveTo(0, -stage.getHeight(), .25f), Actions.run(new Runnable() {
 					 @Override
 					 public void run() {
-						 ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+						 ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
 					 }
 				})));
 			}

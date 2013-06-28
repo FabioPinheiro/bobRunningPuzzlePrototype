@@ -1,5 +1,7 @@
 package com.epic.bobrunningpuzzle.model;
 
+import com.epic.bobrunningpuzzle.view.RendererVisitor;
+
 public class Start extends Surmountable {
 
 	@Override
@@ -12,6 +14,11 @@ public class Start extends Surmountable {
 	public void updateBob(float delta, Bob bob) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
+		rendererVisitor.draw(this);
 	}
 
 }

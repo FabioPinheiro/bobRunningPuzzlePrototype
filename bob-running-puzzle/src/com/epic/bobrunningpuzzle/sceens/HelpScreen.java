@@ -84,7 +84,7 @@ public class HelpScreen implements Screen {
 		buttonBack.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y){
-				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenuScreen());
 			}
 		});
 		buttonBack.pad(15);

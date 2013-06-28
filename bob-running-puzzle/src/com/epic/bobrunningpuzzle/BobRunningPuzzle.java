@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.epic.bobrunningpuzzle.sceens.Splash;
+import com.epic.bobrunningpuzzle.sceens.SplashScreen;
 
 public class BobRunningPuzzle extends Game {
 	
@@ -18,7 +18,7 @@ public class BobRunningPuzzle extends Game {
 	
 	@Override
 	public void create() {
-		setScreen(new Splash());
+		setScreen(new SplashScreen());
 	}
 
 	@Override
