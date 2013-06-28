@@ -4,19 +4,37 @@ import com.badlogic.gdx.math.Vector2;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 public class Bob implements ModelElement{
-	public enum State {
-		A, B, C
+	/**
+	 * @author Fábio Pinheiro
+	 * @see Surmountable#updateBob(float, Bob)
+	 */
+	public enum EntryExtremity {
+		A, B
 	}
 	
 	private Surmountable local;//FIXME rename me plz
-	//Vector2 	position = new Vector2(); no need
-	Vector2 	velocity = new Vector2();
-	State		state = State.A;
+	EntryExtremity entryExtremity = EntryExtremity.A;
+	//Vector2 position = new Vector2(); no need
+	Vector2 velocity = new Vector2();
 
 	
 	public Bob(Surmountable local) {
 		this.local = local;
 		update(0);
+		//surmountableTransition(newSurmountable, entryExtremity, remainingDelta)
+	}
+	
+	/**
+	 * 
+	 * @param newSurmountable
+	 * @param entryExtremity
+	 * @param remainingDelta at the end of the previous {@link Surmountable}
+	 * @see Surmountable#updateBob(float, Bob)
+	 */
+	public void surmountableTransition(Surmountable newSurmountable, EntryExtremity entryExtremity, float remainingDelta){
+		this.local = newSurmountable;
+		this.entryExtremity = entryExtremity;
+		newSurmountable.updateBob(remainingDelta, this);
 	}
 	
 	public void update(float delta) {
@@ -24,12 +42,12 @@ public class Bob implements ModelElement{
 	}
 	
 	//get's and set's
-	public State getState() {
-		return state;
+	/*public EntryExtremity getEntryExtremity() {
+		return entryExtremity;
 	}
-	public void setState(State newState) {
-		this.state = newState;
-	}
+	public void setEntryExtremity(EntryExtremity newEntryExtremity) {
+		this.entryExtremity = newEntryExtremity;
+	}*/
 	
 	public Vector2 getVelocity() {
 		return velocity;

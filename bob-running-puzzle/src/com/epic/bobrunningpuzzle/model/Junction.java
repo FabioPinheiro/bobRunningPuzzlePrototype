@@ -7,7 +7,7 @@ public class Junction extends Surmountable{
 
 	/**
 	 * @author Fábio Pinheiro
-	 * GateType will be used to define the way forward for this entry gate
+	 * GateType will be used to define the way forward for this entry {@link Gate}
 	 * l and L is for lower gate number
 	 * h and H is for higher gate number
 	 * uppercase - can NOT change the way
@@ -17,20 +17,22 @@ public class Junction extends Surmountable{
 		l, h, L, H
 	}
 	
-	private GateType gate1, gate2, gate3;
-	Vector2 	position = new Vector2();
+	private GateType gateType1, gateType2, gateType3;
+	private Gate gate1, gate2, gate3;
+	private Vector2 position = new Vector2();
+	private float rotation;
 	
 	public Junction(Vector2 position) {
 		this.position = position;
-		this.gate1 = GateType.l;
-		this.gate2 = GateType.l;
-		this.gate3 = GateType.l;
+		this.gateType1 = GateType.l;
+		this.gateType2 = GateType.l;
+		this.gateType3 = GateType.l;
 	}
 	public Junction(Vector2 position, GateType gate1, GateType gate2, GateType gate3) {
 		this.position = position;
-		this.gate1 = gate1;
-		this.gate2 = gate2;
-		this.gate3 = gate3;
+		this.gateType1 = gate1;
+		this.gateType2 = gate2;
+		this.gateType3 = gate3;
 	}
 	
 	@Override
