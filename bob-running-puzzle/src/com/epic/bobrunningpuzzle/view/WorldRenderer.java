@@ -4,12 +4,14 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.model.Alley;
 import com.epic.bobrunningpuzzle.model.Bob;
 import com.epic.bobrunningpuzzle.model.Goal;
+import com.epic.bobrunningpuzzle.model.Junction;
 import com.epic.bobrunningpuzzle.model.Level;
 import com.epic.bobrunningpuzzle.model.Road;
 import com.epic.bobrunningpuzzle.model.Start;
@@ -21,7 +23,6 @@ public class WorldRenderer implements RendererVisitor{
 	private static final float CAMERA_HEIGHT = 7f;
 	private static final float RUNNING_FRAME_DURATION = 0.06f;
 	
-	private Bob bob;
 	private Level level;
 	private OrthographicCamera cam;
 	
@@ -32,6 +33,7 @@ public class WorldRenderer implements RendererVisitor{
 	private float ppuX; // pixels per unit on the X axis
 	private float ppuY; // pixels per unit on the Y axis
 	
+	private Texture bobTexture;
 	/** for debug rendering **/
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	
@@ -41,11 +43,15 @@ public class WorldRenderer implements RendererVisitor{
 		this.level = level;
 		this.debug = debug;		
 		spriteBatch = new SpriteBatch();
-		this.bob= new Bob(level.getStart());
 		this.cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
 		this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0);
 		this.cam.update();
 		loadTextures();
+		bobTexture = new Texture("img/bob.png");
+	}
+	
+	public void update(){
+		//TODO
 	}
 	
 	public void render() {
@@ -53,7 +59,6 @@ public class WorldRenderer implements RendererVisitor{
 		this.cam.update();
 		spriteBatch.begin();
 			level.acceptRendererVisitor(this);//drawSurmountable(level);
-			bob.acceptRendererVisitor(this);//drawSurmountable(bob);
 		spriteBatch.end();
 	
 		if (debug)
@@ -66,6 +71,7 @@ public class WorldRenderer implements RendererVisitor{
 	
 	public void draw(Bob bob) {
 		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawBob");
+		spriteBatch.draw(bobTexture, 0, 0);
 	}
 	public void draw(Level level) {
 		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawLevel");
@@ -82,6 +88,9 @@ public class WorldRenderer implements RendererVisitor{
 	}
 	public void draw(Goal el) {
 		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawGoal");
+	}
+	public void draw(Junction el) {
+		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawJunction");
 	}
 	public void draw(Road el) {
 		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawRoad");
@@ -126,5 +135,10 @@ public class WorldRenderer implements RendererVisitor{
 		this.height = h;
 		ppuX = (float)width / CAMERA_WIDTH;
 		ppuY = (float)height / CAMERA_HEIGHT;
+	}
+	
+	public void dispose(){
+		spriteBatch.dispose();
+		bobTexture.dispose();
 	}
 }

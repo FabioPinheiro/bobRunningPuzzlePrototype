@@ -7,18 +7,26 @@ import com.epic.bobrunningpuzzle.view.RendererVisitor;
 import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
 public class Level implements ModelElement{
+	
 	private Array<Surmountable> map = new Array<Surmountable>();
 	private Start start;
+	private Bob bob;
+	
+	public Bob getBob() {
+		return bob;
+	}
+
 	public Level() {
-		start = new Start();
-		map.add(start);
-		map.add(new Road());
-		map.add(new Road());
-		map.add(new Road());
+		this.start = new Start();
+		this.bob= new Bob(this.getStart());
+		
+		this.map.add(start);
+		this.map.add(new Road());
+		this.map.add(new Road());
+		this.map.add(new Road());
 	}
 
 	/**
-	 * 
 	 * @return the strat of the level
 	 * @see Strat#updateBob(float delta, Bob bob)
 	 */
@@ -44,6 +52,7 @@ public class Level implements ModelElement{
 
 	@Override
 	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
+		bob.acceptRendererVisitor(rendererVisitor);//drawSurmountable(bob);
 		//rendererVisitor.drawSurmountable(this);//FIXME
 		Iterator<Surmountable> it =  this.getIterator();
 		while(it.hasNext()){
