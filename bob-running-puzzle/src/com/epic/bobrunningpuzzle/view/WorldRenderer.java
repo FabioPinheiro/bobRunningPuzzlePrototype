@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.model.Alley;
 import com.epic.bobrunningpuzzle.model.Bob;
+import com.epic.bobrunningpuzzle.model.Gate;
 import com.epic.bobrunningpuzzle.model.Goal;
 import com.epic.bobrunningpuzzle.model.Junction;
 import com.epic.bobrunningpuzzle.model.Level;
@@ -48,17 +49,19 @@ public class WorldRenderer implements RendererVisitor{
 		this.cam.update();
 		loadTextures();
 		bobTexture = new Texture("img/bob.png");
+		
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, level.debugString());
 	}
 	
-	public void update(){
-		//TODO
+	public void update(float delta){
+		level.update(delta);
 	}
 	
 	public void render() {
-		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#drawLevel");
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#drawLevel");
 		this.cam.update();
 		spriteBatch.begin();
-			level.acceptRendererVisitor(this);//drawSurmountable(level);
+			level.acceptRendererVisitor(this);
 		spriteBatch.end();
 	
 		if (debug)
@@ -66,37 +69,41 @@ public class WorldRenderer implements RendererVisitor{
 	}
 	
 	private void drawDebug() {
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawDebug");
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawDebug");
 	}
 	
 	public void draw(Bob bob) {
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawBob");
-		spriteBatch.draw(bobTexture, 0, 0);
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawBob");
+		spriteBatch.draw(bobTexture, bob.getPosition().x, bob.getPosition().y);
 	}
 	public void draw(Level level) {
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawLevel");
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawLevel");
 		Gdx.app.error("ERROR!!", "drawLevel- nunca devia chegar aqui!!!! devido ao visitor");//FIXME
 	}
 	
 	public void draw(Surmountable el) {
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, "ERROR!!!! " + this.getClass().getName() +" #drawSurmountable");
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, "ERROR!!!! " + this.getClass().getName() +" #drawSurmountable");
 		Gdx.app.error("ERROR!!", "drawSurmountable- nunca devia chegar aqui!!!!");
 	}
 	
 	public void draw(Alley el) {
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawAlley");
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawAlley");
+	}
+	@Override
+	public void draw(Gate el) {
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawGate");
 	}
 	public void draw(Goal el) {
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawGoal");
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawGoal");
 	}
 	public void draw(Junction el) {
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawJunction");
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawJunction");
 	}
 	public void draw(Road el) {
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawRoad");
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawRoad");
 	}
 	public void draw(Start el) {
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawStart");
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawStart");
 	}
 	
 	public void loadTextures() {
