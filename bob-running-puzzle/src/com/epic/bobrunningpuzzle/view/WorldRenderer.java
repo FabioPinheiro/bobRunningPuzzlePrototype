@@ -1,12 +1,14 @@
 package com.epic.bobrunningpuzzle.view;
 
-import java.util.Iterator;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.model.Alley;
 import com.epic.bobrunningpuzzle.model.Bob;
@@ -21,60 +23,85 @@ import com.epic.bobrunningpuzzle.model.Surmountable;
 public class WorldRenderer implements RendererVisitor{
 
 	private static final float CAMERA_WIDTH = 10f;
-	private static final float CAMERA_HEIGHT = 7f;
-	private static final float RUNNING_FRAME_DURATION = 0.06f;
+	private static final float CAMERA_HEIGHT = 10f;
+	//private static final float RUNNING_FRAME_DURATION = 0.06f;
 	
 	private Level level;
 	private OrthographicCamera cam;
 	
 	private SpriteBatch spriteBatch;
 	private boolean debug;
-	private int width;
-	private int height;
+	private float width;			//width = Gdx.graphics.getWidth();
+	private float height;			//height = Gdx.graphics.getHeight();
 	private float ppuX; // pixels per unit on the X axis
 	private float ppuY; // pixels per unit on the Y axis
 	
 	private Texture bobTexture;
-	/** for debug rendering **/
+	
+	//** for debug rendering **//
 	ShapeRenderer debugRenderer = new ShapeRenderer();
 	
 	
-	public WorldRenderer(Level level, boolean dedug) {
+	
+	public WorldRenderer(Level level, boolean debug) {
 		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+" <new>");
 		this.level = level;
-		this.debug = debug;		
-		spriteBatch = new SpriteBatch();
-		this.cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
-		this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0);
-		this.cam.update();
-		loadTextures();
-		bobTexture = new Texture("img/bob.png");
+		this.debug = debug;
+
 		
-		Gdx.app.log(BobRunningPuzzle.GAMELOG, level.debugString());
+		this.cam = new OrthographicCamera();//Gdx.graphics.getWidth(),Gdx.graphics.getHeight());//CAMERA_WIDTH, CAMERA_HEIGHT);
+		this.cam.setToOrtho(false, 30f, 30f);
+		//this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0);
+		this.cam.update();
+
+		spriteBatch = new SpriteBatch();
+		//spriteBatch.setProjectionMatrix(cam.combined);
+		spriteBatch.setProjectionMatrix(cam.projection);
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+" $$$$$$$$$\n"+ cam.combined.toString());
+		
+		loadTextures();
+		
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG, level.debugString());
 	}
 	
-	public void update(float delta){
-		level.update(delta);
-	}
 	
 	public void render() {
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#drawLevel");
-		this.cam.update();
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#render");
+		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
+		updateCam();
+		
+		spriteBatch.setProjectionMatrix(cam.combined);
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+" #############\n"+ cam.projection.toString());
 		spriteBatch.begin();
 			level.acceptRendererVisitor(this);
 		spriteBatch.end();
-	
-		if (debug)
+		
+		if (debug) {
+			debugRenderer.setProjectionMatrix(cam.combined);
 			drawDebug();
+		}
 	}
 	
-	private void drawDebug() {
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawDebug");
+	private void updateCam() {
+		this.cam.position.set(level.getBob().getPosition().x, level.getBob().getPosition().y, 1);
+		this.cam.lookAt(level.getBob().getPosition().x, level.getBob().getPosition().y, 0);
+		this.cam.rotate(0.2f);
+		this.cam.update();
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#updateCam: this.cam.direction:"+ this.cam.direction.toString());
+	}
+
+
+	public void dispose(){
+		spriteBatch.dispose();
+		bobTexture.dispose();
+		debugRenderer.dispose();
 	}
 	
 	public void draw(Bob bob) {
 		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawBob");
-		spriteBatch.draw(bobTexture, bob.getPosition().x, bob.getPosition().y);
+		spriteBatch.draw(bobTexture, bob.getPosition().x-Bob.SIZE/2, bob.getPosition().y-Bob.SIZE/2,Bob.SIZE,Bob.SIZE);
 	}
 	public void draw(Level level) {
 		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawLevel");
@@ -107,6 +134,8 @@ public class WorldRenderer implements RendererVisitor{
 	}
 	
 	public void loadTextures() {
+		bobTexture = new Texture("img/bob.png");
+		bobTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		/*//bobTexture = new  Texture(Gdx.files.internal("data/textures/Mushroom_Block.png"));
 		blockTexture = new Texture(Gdx.files.internal("data/textures/Brick_Block.png"));
 		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("data/textures/textures.pack"));
@@ -142,10 +171,36 @@ public class WorldRenderer implements RendererVisitor{
 		this.height = h;
 		ppuX = (float)width / CAMERA_WIDTH;
 		ppuY = (float)height / CAMERA_HEIGHT;
+		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#setSize(): ppuX" + ppuX +"  ppuY"+ ppuY);
 	}
 	
-	public void dispose(){
-		spriteBatch.dispose();
-		bobTexture.dispose();
+	
+	private void drawDebug() {
+		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawDebug");
+		debugRenderer.begin(ShapeType.Line);
+		float maxX=100, maxY=100;
+		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName());
+		for(float x = 0; x <maxX ; x+=1){
+			debugRenderer.line(x, 0, x, maxY, new Color(1, 0, 0, 1), new Color(1, 0, 0, 1));
+		}
+		for(float y = 0; y <maxY ; y+=1){
+			debugRenderer.line(0, y, maxX, y, new Color(0, 1, 0, 1), new Color(0, 1, 0, 1));
+		}
+		
+		/*for (Block block : world.getDrawableBlocks((int)CAMERA_WIDTH, (int)CAMERA_HEIGHT)) {
+			Rectangle rect = block.getBounds();
+			float x1 = block.getPosition().x + rect.x;
+			float y1 = block.getPosition().y + rect.y;
+			debugRenderer.setColor(new Color(1, 0, 0, 1));
+			debugRenderer.rect(x1, y1, rect.width, rect.height);
+		}
+		// render Bob
+		Bob bob = world.getBob();
+		Rectangle rect = bob.getBounds();
+		float x1 = bob.getPosition().x + rect.x;
+		float y1 = bob.getPosition().y + rect.y;
+		debugRenderer.setColor(new Color(0, 1, 0, 1));
+		debugRenderer.rect(x1, y1, rect.width, rect.height);*/
+		debugRenderer.end();
 	}
 }

@@ -21,6 +21,11 @@ public class Road extends Surmountable {
 		this.gateA = new Gate(this, gateA);
 		this.gateB = new Gate(this, positionB);
 	}
+	public Road(Gate gateA, Gate gateB, String debugID) {
+		super(debugID);
+		this.gateA = new Gate(this, gateA);
+		this.gateB = new Gate(this, gateB);
+	}
 	
 
 	@Override

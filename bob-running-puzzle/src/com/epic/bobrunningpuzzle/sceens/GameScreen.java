@@ -21,24 +21,26 @@ public class GameScreen implements Screen, InputProcessor {
 
 	private int width, height; // the width and height of the screen used by the Android touch events.
 	
+	public GameScreen() {
+		level = new Level();
+		worldRenderer = new WorldRenderer(level, true);
+	}
+	
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		//Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1); FIXME
+		//Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); FIXME
 
-		//level.update(delta);
 		//controller.update(delta);
-		worldRenderer.update(delta);
+		level.update(delta);
 		worldRenderer.render();
 	}
 	
 	@Override
 	public void show(){
 		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#show()");
-		level = new Level();
-		worldRenderer = new WorldRenderer(level, true);
 		//controller = new BobController(world);
-		Gdx.input.setInputProcessor(this);
+		//Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
@@ -50,7 +52,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void hide() {
-		Gdx.input.setInputProcessor(null);
+		this.dispose();
 	}
 
 	@Override

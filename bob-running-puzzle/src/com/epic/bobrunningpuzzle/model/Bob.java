@@ -7,6 +7,8 @@ import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 public class Bob implements ModelElement{
 	
+	public static final float SIZE = 1f;
+	
 	/**
 	 * @author Fábio Pinheiro
 	 * @see Surmountable#updateBob(float, Bob)
