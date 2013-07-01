@@ -25,14 +25,12 @@ public class Level implements ModelElement{
 		Road road2= new Road(road1.getGateB(),new Vector2(2,-1),"B");
 		Road road3= new Road(road2.getGateB(),new Vector2(10,10),"C");
 		Road road4= new Road(road3.getGateB(), road1.getGateA(),"D");
-
 		
 		this.map.add(start);
 		this.map.add(road1);
 		this.map.add(road2);
 		this.map.add(road3);
 		this.map.add(road4);
-		
 	}
 	
 	public void update(float delta){
