@@ -52,6 +52,8 @@ public class Road extends Surmountable {
 	@Override
 	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
 		rendererVisitor.draw(this);
+		gateA.acceptRendererVisitor(rendererVisitor);
+		gateB.acceptRendererVisitor(rendererVisitor);
 	}
 	
 	//get's and set's

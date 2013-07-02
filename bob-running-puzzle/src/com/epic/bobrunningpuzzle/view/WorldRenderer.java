@@ -22,8 +22,8 @@ import com.epic.bobrunningpuzzle.model.Surmountable;
 
 public class WorldRenderer{
 
-	private static final float CAMERA_WIDTH = 10f;
-	private static final float CAMERA_HEIGHT = 10f;
+	//private static final float CAMERA_WIDTH = 10f;
+	//private static final float CAMERA_HEIGHT = 10f;
 	//private static final float RUNNING_FRAME_DURATION = 0.06f;
 	
 	private Level level;
@@ -31,8 +31,8 @@ public class WorldRenderer{
 	
 	private float width;			//width = Gdx.graphics.getWidth();
 	private float height;			//height = Gdx.graphics.getHeight();
-	private float ppuX; // pixels per unit on the X axis
-	private float ppuY; // pixels per unit on the Y axis
+	//private float ppuX; // pixels per unit on the X axis
+	//private float ppuY; // pixels per unit on the Y axis
 	
 	private Texture bobTexture;
 	
@@ -53,7 +53,7 @@ public class WorldRenderer{
 
 		
 		this.cam = new OrthographicCamera();//Gdx.graphics.getWidth(),Gdx.graphics.getHeight());//CAMERA_WIDTH, CAMERA_HEIGHT);
-		this.cam.setToOrtho(false, 30f, 30f);
+		this.cam.setToOrtho(false, 20f, 20f);
 		//this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0);
 		this.cam.update();
 
@@ -86,17 +86,19 @@ public class WorldRenderer{
 		
 		if (debug) {
 			debugShapeRenderer.setProjectionMatrix(cam.combined);
+			debugShapeRenderer.begin(ShapeType.Line);
 			rendererDebugModels.drawGridLines();
 			level.acceptRendererVisitor(rendererDebugModels);
+			debugShapeRenderer.end();
 		}
 	}
 	
 	private void updateCam() {
 		this.cam.position.set(level.getBob().getPosition().x, level.getBob().getPosition().y, 1);
 		this.cam.lookAt(level.getBob().getPosition().x, level.getBob().getPosition().y, 0);
-		this.cam.rotate(0.2f);
+		//this.cam.rotate(0.2f);
 		this.cam.update();
-		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#updateCam: this.cam.direction:"+ this.cam.direction.toString());
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#updateCam: this.cam.direction:"+ this.cam.direction.toString());
 	}
 
 
@@ -144,9 +146,9 @@ public class WorldRenderer{
 	public void setSize (int w, int h) {
 		this.width = w;
 		this.height = h;
-		ppuX = (float)width / CAMERA_WIDTH;
-		ppuY = (float)height / CAMERA_HEIGHT;
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#setSize(): ppuX" + ppuX +"  ppuY"+ ppuY);
+		//ppuX = (float)width / CAMERA_WIDTH;
+		//ppuY = (float)height / CAMERA_HEIGHT;
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#setSize(): ppuX" + ppuX +"  ppuY"+ ppuY);
 	}
 	
 }

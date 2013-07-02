@@ -31,6 +31,11 @@ public class Level implements ModelElement{
 		this.map.add(road2);
 		this.map.add(road3);
 		this.map.add(road4);
+		
+		Junction junctuin1 = new Junction(new Vector2(2, 6), 0.7f, 0f, "l", "l", "l");
+		Junction junctuin2 = new Junction(new Vector2(4, 6), 1f, 20f, "l", "H", "h");
+		this.map.add(junctuin1);
+		this.map.add(junctuin2);
 	}
 	
 	public void update(float delta){

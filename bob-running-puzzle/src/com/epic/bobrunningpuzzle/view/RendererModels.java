@@ -23,9 +23,9 @@ public class RendererModels implements RendererVisitor{
 		this.bobTexture = bobTexture;
 	}
 	
-	public void draw(Bob bob) {
+	public void draw(Bob el) {
 		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawBob");
-		spriteBatch.draw(bobTexture, bob.getPosition().x-Bob.SIZE/2, bob.getPosition().y-Bob.SIZE/2,Bob.SIZE,Bob.SIZE);
+		spriteBatch.draw(bobTexture, el.getPosition().x-Bob.SIZE/2, el.getPosition().y-Bob.SIZE/2,Bob.SIZE,Bob.SIZE);
 	}
 	public void draw(Level level) {
 		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawLevel");

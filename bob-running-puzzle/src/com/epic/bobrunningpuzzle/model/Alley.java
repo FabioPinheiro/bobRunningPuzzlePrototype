@@ -35,6 +35,7 @@ public class Alley extends Surmountable {
 	@Override
 	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
 		rendererVisitor.draw(this);
+		gate.acceptRendererVisitor(rendererVisitor);
 	}
 
 }
