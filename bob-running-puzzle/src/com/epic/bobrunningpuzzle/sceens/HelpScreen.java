@@ -8,6 +8,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -32,14 +34,19 @@ public class HelpScreen implements Screen {
 
 	private int width, height; // the width and height of the screen used by the
 								// Android touch events.
-
+	private ParticleEffect effect;
+	private SpriteBatch batch;
+	
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		Table.drawDebug(stage);
-		
+
+		batch.begin();
+		effect.draw(batch, delta);
+		batch.end();
 		
 		stage.act(delta);
 		stage.draw();
@@ -55,6 +62,7 @@ public class HelpScreen implements Screen {
 	public void show() {
 		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#show()");
 		stage = new Stage();
+		batch = new SpriteBatch();
 
 		Gdx.input.setInputProcessor(stage);
 
@@ -95,7 +103,11 @@ public class HelpScreen implements Screen {
 		
 		table.debug(); //TODO remove later
 		stage.addActor(table);
-
+		
+		effect = new ParticleEffect();
+		effect.load(Gdx.files.internal("effects/test.p"), Gdx.files.internal("img"));
+		effect.setPosition(Gdx.graphics.getWidth()/2, 2*Gdx.graphics.getHeight()/3);
+		effect.start();
 	}
 
 	@Override
