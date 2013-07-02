@@ -20,7 +20,7 @@ import com.epic.bobrunningpuzzle.model.Road;
 import com.epic.bobrunningpuzzle.model.Start;
 import com.epic.bobrunningpuzzle.model.Surmountable;
 
-public class WorldRenderer implements RendererVisitor{
+public class WorldRenderer{
 
 	private static final float CAMERA_WIDTH = 10f;
 	private static final float CAMERA_HEIGHT = 10f;
@@ -29,8 +29,6 @@ public class WorldRenderer implements RendererVisitor{
 	private Level level;
 	private OrthographicCamera cam;
 	
-	private SpriteBatch spriteBatch;
-	private boolean debug;
 	private float width;			//width = Gdx.graphics.getWidth();
 	private float height;			//height = Gdx.graphics.getHeight();
 	private float ppuX; // pixels per unit on the X axis
@@ -38,8 +36,13 @@ public class WorldRenderer implements RendererVisitor{
 	
 	private Texture bobTexture;
 	
+	
+	private SpriteBatch spriteBatch;
+	private RendererModels rendererModels;
 	//** for debug rendering **//
-	ShapeRenderer debugRenderer = new ShapeRenderer();
+	private boolean debug;
+	private ShapeRenderer debugShapeRenderer = new ShapeRenderer();
+	private RendererDebugModels rendererDebugModels;
 	
 	
 	
@@ -61,6 +64,10 @@ public class WorldRenderer implements RendererVisitor{
 		
 		loadTextures();
 		
+		this.rendererModels = new RendererModels(spriteBatch, bobTexture);
+		this.rendererDebugModels = new RendererDebugModels(debugShapeRenderer);
+		
+		
 		//Gdx.app.log(BobRunningPuzzle.GAMELOG, level.debugString());
 	}
 	
@@ -72,15 +79,15 @@ public class WorldRenderer implements RendererVisitor{
 		
 		updateCam();
 		
-		spriteBatch.setProjectionMatrix(cam.combined);
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+" #############\n"+ cam.projection.toString());
+		spriteBatch.setProjectionMatrix(cam.combined); //LIXO Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+" #############\n"+ cam.projection.toString());
 		spriteBatch.begin();
-			level.acceptRendererVisitor(this);
+			level.acceptRendererVisitor(rendererModels);
 		spriteBatch.end();
 		
 		if (debug) {
-			debugRenderer.setProjectionMatrix(cam.combined);
-			drawDebug();
+			debugShapeRenderer.setProjectionMatrix(cam.combined);
+			rendererDebugModels.drawGridLines();
+			level.acceptRendererVisitor(rendererDebugModels);
 		}
 	}
 	
@@ -96,42 +103,10 @@ public class WorldRenderer implements RendererVisitor{
 	public void dispose(){
 		spriteBatch.dispose();
 		bobTexture.dispose();
-		debugRenderer.dispose();
+		debugShapeRenderer.dispose();
 	}
 	
-	public void draw(Bob bob) {
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawBob");
-		spriteBatch.draw(bobTexture, bob.getPosition().x-Bob.SIZE/2, bob.getPosition().y-Bob.SIZE/2,Bob.SIZE,Bob.SIZE);
-	}
-	public void draw(Level level) {
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawLevel");
-		Gdx.app.error("ERROR!!", "drawLevel- nunca devia chegar aqui!!!! devido ao visitor");//FIXME
-	}
 	
-	public void draw(Surmountable el) {
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, "ERROR!!!! " + this.getClass().getName() +" #drawSurmountable");
-		Gdx.app.error("ERROR!!", "drawSurmountable- nunca devia chegar aqui!!!!");
-	}
-	
-	public void draw(Alley el) {
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawAlley");
-	}
-	@Override
-	public void draw(Gate el) {
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawGate");
-	}
-	public void draw(Goal el) {
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawGoal");
-	}
-	public void draw(Junction el) {
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawJunction");
-	}
-	public void draw(Road el) {
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawRoad");
-	}
-	public void draw(Start el) {
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawStart");
-	}
 	
 	public void loadTextures() {
 		bobTexture = new Texture("img/bob.png");
@@ -174,33 +149,4 @@ public class WorldRenderer implements RendererVisitor{
 		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#setSize(): ppuX" + ppuX +"  ppuY"+ ppuY);
 	}
 	
-	
-	private void drawDebug() {
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawDebug");
-		debugRenderer.begin(ShapeType.Line);
-		float maxX=100, maxY=100;
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName());
-		for(float x = 0; x <maxX ; x+=1){
-			debugRenderer.line(x, 0, x, maxY, new Color(1, 0, 0, 1), new Color(1, 0, 0, 1));
-		}
-		for(float y = 0; y <maxY ; y+=1){
-			debugRenderer.line(0, y, maxX, y, new Color(0, 1, 0, 1), new Color(0, 1, 0, 1));
-		}
-		
-		/*for (Block block : world.getDrawableBlocks((int)CAMERA_WIDTH, (int)CAMERA_HEIGHT)) {
-			Rectangle rect = block.getBounds();
-			float x1 = block.getPosition().x + rect.x;
-			float y1 = block.getPosition().y + rect.y;
-			debugRenderer.setColor(new Color(1, 0, 0, 1));
-			debugRenderer.rect(x1, y1, rect.width, rect.height);
-		}
-		// render Bob
-		Bob bob = world.getBob();
-		Rectangle rect = bob.getBounds();
-		float x1 = bob.getPosition().x + rect.x;
-		float y1 = bob.getPosition().y + rect.y;
-		debugRenderer.setColor(new Color(0, 1, 0, 1));
-		debugRenderer.rect(x1, y1, rect.width, rect.height);*/
-		debugRenderer.end();
-	}
 }
