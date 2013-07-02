@@ -102,15 +102,19 @@ public class HelpScreen implements Screen {
 		buttonBack.setPosition(width-buttonBack.getHeight(), height-buttonBack.getHeight());
 		
 		
-		Window window = new Window("Help", skin);
-		window.pad(64);
-		window.add("Touch the screen \n to change your route...");
-		window.pack();
-		stage.addActor(window);
+//		Window window = new Window("Help", skin);
+//		window.pad(64);
+//		window.add("Touch the screen \n to change your route...");
+//		window.pack();
+//		stage.addActor(window);
 		
-		table.row();
-		table.add(buttonBack);
-		table.getCell(buttonBack).spaceBottom(10);
+		table.add(new Label("HELP", skin/*, "big"*/)).colspan(3).expandX().spaceBottom(50).row();
+		table.add().width(table.getWidth() / 3); // adding three empty cells just for looks
+		table.add().width(table.getWidth() / 3);
+		table.add().width(table.getWidth() / 3).row();
+		table.add().expandY().top().left();
+		table.add("Touch the screen \n to change your route...");
+		table.add(buttonBack).bottom().right();
 		
 		table.debug(); //TODO remove later
 		stage.addActor(table);
