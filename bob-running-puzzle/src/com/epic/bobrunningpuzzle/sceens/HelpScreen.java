@@ -5,6 +5,7 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
@@ -70,6 +72,7 @@ public class HelpScreen implements Screen {
 		skin = new Skin(Gdx.files.internal("ui/generalSkin.json"),atlas);
 		table = new Table(skin);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setPosition(width, height);
 		// Creating Fonts
 		whiteFont = new BitmapFont(Gdx.files.internal("font/whiteFont.fnt"),
 				false);
@@ -96,6 +99,14 @@ public class HelpScreen implements Screen {
 			}
 		});
 		buttonBack.pad(15);
+		buttonBack.setPosition(width-buttonBack.getHeight(), height-buttonBack.getHeight());
+		
+		
+		Window window = new Window("Help", skin);
+		window.pad(64);
+		window.add("Touch the screen \n to change your route...");
+		window.pack();
+		stage.addActor(window);
 		
 		table.row();
 		table.add(buttonBack);
