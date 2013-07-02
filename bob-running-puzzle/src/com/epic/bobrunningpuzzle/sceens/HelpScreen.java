@@ -58,8 +58,8 @@ public class HelpScreen implements Screen {
 
 		Gdx.input.setInputProcessor(stage);
 
-		atlas = new TextureAtlas("ui/button.pack");
-		skin = new Skin(atlas);
+		atlas = new TextureAtlas("ui/atlas.pack");
+		skin = new Skin(Gdx.files.internal("ui/generalSkin.json"),atlas);
 		table = new Table(skin);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		// Creating Fonts
