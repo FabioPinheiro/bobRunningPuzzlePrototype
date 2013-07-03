@@ -71,9 +71,18 @@ public class Junction extends Surmountable{
 		this.gateType1 = gateType1;
 		this.gateType2 = gateType2;
 		this.gateType3 = gateType3;
-		this.gate1 = new Gate(this, new Vector2(center.x-radius, center.y+0));//FIXME angle is important to determine the position of the gates
-		this.gate2 = new Gate(this, new Vector2(center.x+0, center.y+radius));//FIXME angle is important to determine the position of the gates
-		this.gate3 = new Gate(this, new Vector2(center.x+radius, center.y+0));//FIXME angle is important to determine the position of the gates
+		Vector2 vecAux1 = new Vector2(-radius,0);
+		Vector2 vecAux2 = new Vector2(0,+radius);
+		Vector2 vecAux3= new Vector2(+radius,0);
+		vecAux1.rotate(angle);
+		vecAux2.rotate(angle);
+		vecAux3.rotate(angle);
+		vecAux1.add(center);
+		vecAux2.add(center);
+		vecAux3.add(center);
+		this.gate1 = new Gate(this, vecAux1);
+		this.gate2 = new Gate(this, vecAux2);
+		this.gate3 = new Gate(this, vecAux3);
 	}
 	
 	@Override

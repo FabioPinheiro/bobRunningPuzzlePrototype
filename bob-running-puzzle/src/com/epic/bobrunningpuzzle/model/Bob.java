@@ -7,6 +7,10 @@ import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 public class Bob implements ModelElement{
 	
+	public enum Stade {
+		A,B,C
+	}
+	
 	public static final float SIZE = 1f;
 	
 	/**
@@ -16,8 +20,9 @@ public class Bob implements ModelElement{
 	public final static float SPEED = 1f;
 	
 	private Gate entryGate;
-	Vector2 position = new Vector2(); 
+	private Vector2 position = new Vector2(); 
 	private Vector2 velocity = new Vector2();
+	private Stade stade;
 	//private float traveledDistance;
 	
 	/**
@@ -76,6 +81,9 @@ public class Bob implements ModelElement{
 	public Gate getEntryGate() 										{return entryGate;}
 	public void setEntryGate(Gate entryGate) 						{this.entryGate = entryGate;}
 	
+	public Stade getStade() {return stade;}
+	public void setStade(Stade stade) {this.stade = stade;}
+
 	//public float getTraveledDistance() 								{return traveledDistance;}
 	//public void setTraveledDistance(float traveledDistance) 		{this.traveledDistance = traveledDistance;}
 	//public void addTraveledDistance(float addedTraveledDistance) 	{this.traveledDistance += addedTraveledDistance;}
