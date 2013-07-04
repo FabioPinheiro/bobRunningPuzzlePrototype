@@ -41,8 +41,10 @@ public class LevelMenuScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		stage.setViewport(width, height, false);
-		table.setClip(true); // workaround because Table#setTransform(boolean transform) is not working
-		setupTable();
+		//table.setClip(true); // workaround because Table#setTransform(boolean transform) is not working
+		table.invalidateHierarchy();
+		//table.setSize(width,height);
+		//setupTable();
 	}
 
 	@Override
@@ -56,6 +58,8 @@ public class LevelMenuScreen implements Screen {
 		skin = new Skin(Gdx.files.internal("ui/generalSkin.json"),atlas);
 		
 		table = new Table(skin);
+		table.setFillParent(true);
+		
 		table.debug();
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
@@ -126,12 +130,9 @@ public class LevelMenuScreen implements Screen {
 		table.clear(); // remove all children so we can add them again
 		table.setBounds(0, 0, stage.getWidth(), stage.getHeight());
 		table.add(new Label("SELECT LEVEL", skin/*, "big"*/)).colspan(3).expandX().spaceBottom(50).row();
-		table.add().width(table.getWidth() / 3); // adding three empty cells just for looks
-		table.add().width(table.getWidth() / 3);
-		table.add().width(table.getWidth() / 3).row();
-		table.add(scrollPane).expandY().top().left();
-		table.add(buttonPlay);
-		table.add(buttonBack).bottom().right();
+		table.add(scrollPane).uniformX().expandY().top().left();
+		table.add(buttonPlay).uniformX();
+		table.add(buttonBack).uniformX().bottom().right();
 	}
 
 }

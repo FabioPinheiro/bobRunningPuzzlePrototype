@@ -43,10 +43,10 @@ public class CreditsScreen implements Screen{
 	@Override
 	public void resize(int width, int height) {
 		stage.setViewport(width, height, false);
-		
+		table.invalidateHierarchy();
 		//table.setTransform(true);
-		table.setClip(true); //wrokarounf for TsetTransform
-		table.setSize(width, height);
+		//table.setClip(true); //wrokarounf for TsetTransform
+		//table.setSize(width, height);
 	}
 
 	@Override
@@ -59,8 +59,9 @@ public class CreditsScreen implements Screen{
 		Gdx.input.setInputProcessor(stage);
 		
 		table = new Table(skin);
+		table.setFillParent(true);
 		table.debug();
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		//table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		Window window = new Window("CREDITS", skin);
 		window.pad(64);

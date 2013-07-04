@@ -49,6 +49,7 @@ public class HelpScreen implements Screen {
 	public void resize(int width, int height) {
 		this.width = width;
 		this.height = height;
+		table.invalidateHierarchy();
 	}
 
 	@Override
@@ -61,7 +62,8 @@ public class HelpScreen implements Screen {
 		atlas = new TextureAtlas("ui/button.pack");
 		skin = new Skin(atlas);
 		table = new Table(skin);
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setFillParent(true);
+		//LIXO table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		// Creating Fonts
 		whiteFont = new BitmapFont(Gdx.files.internal("font/whiteFont.fnt"),
 				false);

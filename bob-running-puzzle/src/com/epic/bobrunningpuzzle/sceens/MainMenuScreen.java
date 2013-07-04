@@ -26,11 +26,10 @@ import com.epic.bobrunningpuzzle.tween.ActorAccessor;
 public class MainMenuScreen implements Screen {
 
 	private Stage stage; //done
-	private TextureAtlas atlas; //done
+	//private TextureAtlas atlas; //done
 	private Skin skin; //done
 	private Table table; //done
 	private TextButton buttonPlay, buttonCredits, buttonExit, buttonHelp; //50%
-	private Label heading;
 	private TweenManager tweenManager;
 	
 	@Override
@@ -52,7 +51,7 @@ public class MainMenuScreen implements Screen {
 		//table.setTransform(true); ERROR BUG =!?
 		//table.setClip(true);// workaround because Table#setTransform(boolean transform) is not working
 		table.invalidateHierarchy();
-		table.setSize(width,height);
+		//table.setSize(width,height);
 		
 	}
 
@@ -63,11 +62,12 @@ public class MainMenuScreen implements Screen {
 		
 		Gdx.input.setInputProcessor(stage);
 		
-		atlas = new TextureAtlas("ui/atlas.pack");
-		skin = new Skin(Gdx.files.internal("ui/generalSkin.json"),atlas);
+	
+		skin = new Skin(Gdx.files.internal("ui/generalSkin.json"),new TextureAtlas("ui/atlas.pack")); //	atlas = new TextureAtlas("ui/atlas.pack");
 		
 		table = new Table(skin);
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setFillParent(true);
+		//table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		//Creating Buttons
 		buttonPlay = new TextButton("PLAY",skin);
@@ -117,7 +117,7 @@ public class MainMenuScreen implements Screen {
 		buttonExit.pad(5);
 		
 		//Creating heading
-		heading = new Label(BobRunningPuzzle.TITLE, skin);
+		Label heading = new Label(BobRunningPuzzle.TITLE, skin);
 		//heading.setFontScale(1.5f);
 		
 		//Puting stuff together
@@ -190,7 +190,7 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		atlas.dispose();
+		//atlas.dispose();
 		skin.dispose();
 	}
 
