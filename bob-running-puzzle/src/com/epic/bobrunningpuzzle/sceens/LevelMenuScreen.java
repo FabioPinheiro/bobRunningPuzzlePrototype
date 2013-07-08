@@ -4,6 +4,8 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -26,14 +28,16 @@ public class LevelMenuScreen implements Screen {
 	private List list;
 	private ScrollPane scrollPane;
 	private TextButton buttonPlay, buttonBack;
-	
+
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		Table.drawDebug(stage);
-		
+
+
 		stage.act(delta);
 		stage.draw();
 	}
@@ -101,6 +105,8 @@ public class LevelMenuScreen implements Screen {
 		stage.addActor(table);
 		
 		stage.addAction(Actions.sequence(Actions.moveTo(0, stage.getHeight()), Actions.moveTo(0, 0, .25f))); // coming in from top animation
+		
+
 	}
 
 	@Override
