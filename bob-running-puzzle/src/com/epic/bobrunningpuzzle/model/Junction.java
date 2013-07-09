@@ -92,7 +92,8 @@ public class Junction extends Surmountable{
 
 	@Override
 	public void updateBob(float delta, Bob bob) {
-		// TODO Auto-generated method stub
+		//TODO
+		Surmountable.getController().isTouching();
 	}
 
 	@Override

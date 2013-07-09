@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.epic.bobrunningpuzzle.controller.GameController;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
@@ -18,6 +19,7 @@ public class Level implements ModelElement{
 	}
 
 	public Level() {
+		
 		this.start = new Start(new Vector2(0,0));
 		this.bob= new Bob(this.getStart().getGate());
 		

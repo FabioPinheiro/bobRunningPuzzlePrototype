@@ -1,16 +1,23 @@
 package com.epic.bobrunningpuzzle.model;
 
+import com.epic.bobrunningpuzzle.controller.GameController;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 public abstract class Surmountable implements ModelElement{
 
+	private static GameController controller;
 	private String debugID = "none";
+	
+	public static GameController getController() {return controller;}
+	public static void setController(GameController controller) {Surmountable.controller = controller;}
 	private String getDebugID() {return debugID;}
 	public String debugString() {return "(Surmountable::ID:"+getDebugID()+")";}
 	
 	public Surmountable() {
-		//none
 	}
+	//public Surmountable(GameController controller) {
+	//	this.controller = controller;
+	//}
 	public Surmountable(String debugID) {
 		this.debugID = debugID;
 	}

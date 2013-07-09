@@ -98,7 +98,10 @@ public class RendererDebugModels implements RendererVisitor{
 	}
 	public void draw(Junction el) {
 		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawJunction");
-		debugShapeRenderer.setColor(new Color(0, 1, 0, 1));
+		if(Surmountable.getController().isTouching())
+			debugShapeRenderer.setColor(new Color(1, 1, 1, 1));
+		else
+			debugShapeRenderer.setColor(new Color(0, 1, 0, 1));
 		debugShapeRenderer.circle(
 				el.getCenter().x, el.getCenter().y,
 				el.getRadius(), 15);

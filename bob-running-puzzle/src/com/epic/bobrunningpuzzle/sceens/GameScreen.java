@@ -9,19 +9,24 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
+import com.epic.bobrunningpuzzle.controller.GameController;
 import com.epic.bobrunningpuzzle.model.Level;
+import com.epic.bobrunningpuzzle.model.Surmountable;
 import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
-public class GameScreen implements Screen, InputProcessor {
+public class GameScreen implements Screen {
 
 	//private World world;
 	private Level level;
 	private WorldRenderer worldRenderer;
+	private GameController controller;
 	//private BobController controller;
 
 	private int width, height; // the width and height of the screen used by the Android touch events.
 	
 	public GameScreen() {
+		controller = new GameController();
+		Surmountable.setController(controller);
 		level = new Level();
 		worldRenderer = new WorldRenderer(level, true);
 	}
@@ -40,7 +45,7 @@ public class GameScreen implements Screen, InputProcessor {
 	public void show(){
 		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#show()");
 		//controller = new BobController(world);
-		//Gdx.input.setInputProcessor(this);
+		Gdx.input.setInputProcessor(controller);
 	}
 
 	@Override
@@ -105,7 +110,7 @@ public class GameScreen implements Screen, InputProcessor {
 		return false;
 	}
 */
-	@Override
+/*	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		//if (!Gdx.app.getType().equals(ApplicationType.Android))
 			//return false;
@@ -165,5 +170,5 @@ public class GameScreen implements Screen, InputProcessor {
 	public boolean keyTyped(char character) {
 		// TODO Auto-generated method stub
 		return false;
-	}
+	}*/
 }
