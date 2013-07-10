@@ -1,5 +1,6 @@
 package com.epic.bobrunningpuzzle.model;
 
+import com.badlogic.gdx.math.Vector2;
 import com.epic.bobrunningpuzzle.controller.GameController;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
@@ -13,34 +14,11 @@ public abstract class Surmountable implements ModelElement{
 	private String getDebugID() {return debugID;}
 	public String debugString() {return "(Surmountable::ID:"+getDebugID()+")";}
 	
-	public Surmountable() {
-	}
-	//public Surmountable(GameController controller) {
-	//	this.controller = controller;
-	//}
-	public Surmountable(String debugID) {
-		this.debugID = debugID;
-	}
-	/*public class Gate{
-		
-		private final Surmountable surmountableA;
-		private final Surmountable surmountableB;
-		private final EntryExtremity entryExtremityA;
-		private final EntryExtremity entryExtremityB;
-		
-		public Gate(Surmountable surmountableA,  Surmountable surmountableB, EntryExtremity entryExtremityA, EntryExtremity entryExtremityB) {
-			this.surmountableA = surmountableA;
-			this.surmountableB = surmountableB;
-			this.entryExtremityA = entryExtremityA;
-			this.entryExtremityB = entryExtremityB;
-		}
-		public Surmountable nextSurmountable(Surmountable surmountableX) {
-			return(surmountableX.equals(surmountableA) ? surmountableB : surmountableA);
-		}
-		public EntryExtremity nextEntryExtremity(Surmountable surmountableX) {
-			return(surmountableX.equals(surmountableA) ? entryExtremityA : entryExtremityB);
-		}
-	}*/
+	public Surmountable() {}
+	//public Surmountable(GameController controller) {this.controller = controller;}
+	public Surmountable(String debugID) {this.debugID = debugID;}
+	
+	public abstract void calculateAndUpdatePosition(Traveler traveler, Vector2 out);
 	
 	public abstract void update(float delta);
 	
@@ -48,7 +26,7 @@ public abstract class Surmountable implements ModelElement{
 	 * @param delta time for last uptade(FIXME?frame?)
 	 * @param bob
 	 */
-	public abstract void updateBob(float delta,Bob bob);
+	public abstract void updateTraveler(float delta, Traveler traveler);
 	
 	public abstract void acceptRendererVisitor(RendererVisitor rendererVisitor);
 }

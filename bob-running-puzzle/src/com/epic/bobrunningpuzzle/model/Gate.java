@@ -18,18 +18,20 @@ public class Gate implements ModelElement{//extends Surmountable{
 	private Gate pairGate;
 	private final Vector2 position;
 	
+	
 	public Gate(Surmountable surmountable, Vector2 position) {
 		this.surmountable = surmountable;
 		this.position = position;
 		pairGate = null;
 	}
 	
+	/*FIXME I ()Fabio don't like this
 	public Gate(Surmountable surmountable, Gate pairGate) {
 		this.surmountable = surmountable;
 		this.pairGate = pairGate;
 		this.position = pairGate.getPosition();
 		pairGate.setPairGate(this);
-	}
+	}*/
 	
 	public boolean activated (){
 		return pairGate != null;
@@ -40,6 +42,11 @@ public class Gate implements ModelElement{//extends Surmountable{
 	public void setPairGate(Gate pairGate) 	{this.pairGate = pairGate;}
 	public Surmountable getSurmountable() 	{return surmountable;}
 	public Vector2 getPosition() 			{return position;}
+	
+	public static void pairOfGates(Gate a, Gate b){
+		a.setPairGate(b);
+		b.setPairGate(a);
+	}
 
 	@Override
 	public void update(float delta) {

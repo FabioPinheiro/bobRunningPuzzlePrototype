@@ -87,7 +87,7 @@ public class WorldRenderer{
 		if (debug) {
 			debugShapeRenderer.setProjectionMatrix(cam.combined);
 			debugShapeRenderer.begin(ShapeType.Line);
-			rendererDebugModels.drawGridLines();
+			//FIXME rendererDebugModels.drawGridLines();
 			level.acceptRendererVisitor(rendererDebugModels);
 			debugShapeRenderer.end();
 		}

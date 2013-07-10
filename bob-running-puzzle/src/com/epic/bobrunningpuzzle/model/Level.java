@@ -23,21 +23,27 @@ public class Level implements ModelElement{
 		this.start = new Start(new Vector2(0,0));
 		this.bob= new Bob(this.getStart().getGate());
 		
-		Road road1= new Road(start.getGate(),new Vector2(1,1),"A");
-		Road road2= new Road(road1.getGateB(),new Vector2(2,-1),"B");
-		Road road3= new Road(road2.getGateB(),new Vector2(10,10),"C");
-		Road road4= new Road(road3.getGateB(), road1.getGateA(),"D");
+		Road road1= new StraightLine(start.getGate(),new Vector2(1,1),"pointA");
+		Road road2= new StraightLine(road1.getGateB(),new Vector2(2,-1),"pointB");
+		Road road3= new StraightLine(road2.getGateB(),new Vector2(5,2),"C");
+		//Road road4= new StraightLine(road3.getGateB(), road1.getGateA(),"D");
+		
+		BezierCurve curve1 = new BezierCurve(road3.getGateB(), new Vector2(5,10), new Vector2(2,-5), new Vector2(2,2), "curve1");
+		
 		
 		this.map.add(start);
 		this.map.add(road1);
 		this.map.add(road2);
 		this.map.add(road3);
-		this.map.add(road4);
+		this.map.add(curve1);
+		//this.map.add(road4);
 		
-		Junction junctuin1 = new Junction(new Vector2(2, 6), 0.7f, 0f, "l", "l", "l");
+		/*Junction junctuin1 = new Junction(new Vector2(2, 6), 0.7f, 0f, "l", "l", "l");
 		Junction junctuin2 = new Junction(new Vector2(4, 6), 1f, 180f, "l", "H", "h");
 		this.map.add(junctuin1);
-		this.map.add(junctuin2);
+		this.map.add(junctuin2);*/
+		
+
 	}
 	
 	public void update(float delta){

@@ -21,7 +21,10 @@ public class Junction extends Surmountable{
 	private final GateType gateType1, gateType2, gateType3;
 	private final Gate gate1, gate2, gate3;
 	private final Vector2 center;
+	private final Vector2 vecAuxAB, vecAuxBC, vecAuxAC;
 	private final float radius, angle;
+	
+
 	
 	/**
 	 * @param center center of the object
@@ -73,7 +76,8 @@ public class Junction extends Surmountable{
 		this.gateType3 = gateType3;
 		Vector2 vecAux1 = new Vector2(-radius,0);
 		Vector2 vecAux2 = new Vector2(0,+radius);
-		Vector2 vecAux3= new Vector2(+radius,0);
+		Vector2 vecAux3 = new Vector2(+radius,0);
+		
 		vecAux1.rotate(angle);
 		vecAux2.rotate(angle);
 		vecAux3.rotate(angle);
@@ -83,6 +87,16 @@ public class Junction extends Surmountable{
 		this.gate1 = new Gate(this, vecAux1);
 		this.gate2 = new Gate(this, vecAux2);
 		this.gate3 = new Gate(this, vecAux3);
+		
+		vecAuxAB = new Vector2(-radius,+radius);
+		vecAuxBC = new Vector2(+radius,+radius);
+		vecAuxAC = new Vector2(0,0);
+		vecAuxAB.rotate(angle);
+		vecAuxBC.rotate(angle);
+		vecAuxAC.rotate(angle);
+		vecAuxAB.add(center);
+		vecAuxBC.add(center);
+		vecAuxAC.add(center);
 	}
 	
 	@Override
@@ -91,9 +105,15 @@ public class Junction extends Surmountable{
 	}
 
 	@Override
-	public void updateBob(float delta, Bob bob) {
+	public void updateTraveler(float delta, Traveler traveler) {
 		//TODO
 		Surmountable.getController().isTouching();
+	}
+
+	@Override
+	public void calculateAndUpdatePosition(Traveler traveler, Vector2 out) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -112,4 +132,9 @@ public class Junction extends Surmountable{
 	public Gate getGate3() {return gate3;}
 	public Vector2 getCenter() {return center;}
 	public float getRadius() {return radius;}
+	public Vector2 getVecAuxAB() {return vecAuxAB;}
+	public Vector2 getVecAuxBC() {return vecAuxBC;}
+	public Vector2 getVecAuxAC() {return vecAuxAC;}
+
+	
 }

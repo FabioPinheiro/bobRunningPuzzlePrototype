@@ -13,9 +13,9 @@ public class Alley extends Surmountable {
 		this.radius = radius;
 	}
 
-	public Alley(Gate gate,  float radius) {
-		this.gate = new Gate(this, gate);
-		this.radius = radius;
+	public Alley(Gate gatePair,  float radius) {
+		this(gatePair.getPosition(), radius);
+		Gate.pairOfGates(gatePair, this.getGate());
 	}
 	
 	public Gate getGate() {return gate;}
@@ -28,10 +28,16 @@ public class Alley extends Surmountable {
 	}
 
 	@Override
-	public void updateBob(float delta, Bob bob) {
-		bob.surmountableTransition(this.gate.getPairGate(),delta);
+	public void updateTraveler(float delta, Traveler traveler) {
+		traveler.surmountableTransition(this.gate.getPairGate(),delta);
 	}
-
+	
+	@Override
+	public void calculateAndUpdatePosition(Traveler traveler, Vector2 out) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@Override
 	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
 		rendererVisitor.draw(this);
