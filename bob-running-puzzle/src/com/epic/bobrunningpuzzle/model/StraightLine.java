@@ -25,17 +25,13 @@ public class StraightLine extends Road{
 
 	@Override
 	public void updateTraveler(float delta, Traveler traveler) {
-		float remainingDelta = traveler.updatesStateTraveler(this.getLength(), delta); //LIXO move(this.getOtherGate(traveler.getEntryGate()).getPosition(), delta);
-		if(remainingDelta != 0f){
-			traveler.surmountableTransition(this.getOtherGate(traveler.getEntryGate()).getPairGate(),remainingDelta);
-		}
+		super.updateTraveler(delta, traveler);
 	}
 
 	@Override
 	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
 		rendererVisitor.draw(this);
-		this.getGateA().acceptRendererVisitor(rendererVisitor);
-		this.getGateB().acceptRendererVisitor(rendererVisitor);
+		super.acceptRendererVisitor(rendererVisitor);
 	}
 	@Override
 	public void calculateAndUpdatePosition(Traveler traveler, Vector2 out) {

@@ -77,6 +77,10 @@ public class RendererDebugModels implements RendererVisitor{
 		debugShapeRenderer.circle(
 				el.getPosition().x, el.getPosition().y,
 				0.1f, 20);
+		debugShapeRenderer.setColor(new Color(0f, 1f, .2f, 1));
+		debugShapeRenderer.line(
+				el.getPosition().x, el.getPosition().y,
+				el.getPosition().x + el.getDirection().x , el.getPosition().y + el.getDirection().y);
 	}
 	
 	@Override

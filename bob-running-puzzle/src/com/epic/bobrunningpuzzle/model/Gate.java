@@ -15,37 +15,52 @@ import com.epic.bobrunningpuzzle.view.RendererVisitor;
 public class Gate implements ModelElement{//extends Surmountable{
 
 	private final Surmountable surmountable;
-	private Gate pairGate;
+	private Gate pairGateA, pairGateB;
 	private final Vector2 position;
 	
 	
 	public Gate(Surmountable surmountable, Vector2 position) {
 		this.surmountable = surmountable;
 		this.position = position;
-		pairGate = null;
+		pairGateA = null;
+		pairGateB = null;
 	}
 	
 	/*FIXME I ()Fabio don't like this
-	public Gate(Surmountable surmountable, Gate pairGate) {
+	public Gate(Surmountable surmountable, Gate pairGateA) {
 		this.surmountable = surmountable;
-		this.pairGate = pairGate;
-		this.position = pairGate.getPosition();
-		pairGate.setPairGate(this);
+		this.pairGate = pairGateA;
+		this.position = pairGateA.getPosition();
+		pairGateA.setPairGate(this);
 	}*/
 	
 	public boolean activated (){
-		return pairGate != null;
+		return pairGateA != null;
 	}
 	
-	//get and set
-	public Gate getPairGate() 				{return pairGate;}
-	public void setPairGate(Gate pairGate) 	{this.pairGate = pairGate;}
+	//get and set and is
+	public boolean isComplex() {return this.pairGateB != null;}
+	public Gate getPairGate() {
+		if(this.isComplex() && Surmountable.getController().isTouching())
+			return pairGateB;
+		else return pairGateA;
+	}
+	public void setPairGate(Gate pairGate) 	{this.pairGateA = pairGate;}
+	public void setPairGate(Gate pairGateA, Gate pairGateB) {
+		this.pairGateA = pairGateA;
+		this.pairGateB = pairGateB;
+	}
 	public Surmountable getSurmountable() 	{return surmountable;}
 	public Vector2 getPosition() 			{return position;}
 	
-	public static void pairOfGates(Gate a, Gate b){
-		a.setPairGate(b);
-		b.setPairGate(a);
+	public static void pairOfGates(Gate x, Gate a){
+		x.setPairGate(a);
+		a.setPairGate(x);
+	}
+	public static void pairOfGates(Gate x, Gate a, Gate b){
+		x.setPairGate(a, b);
+		a.setPairGate(x);
+		b.setPairGate(x);
 	}
 
 	@Override
@@ -71,6 +86,6 @@ public class Gate implements ModelElement{//extends Surmountable{
 	public String debugString() {
 		return "Gate:: position:" + position.toString()+
 				"; surmountable:" + surmountable.toString() +
-				"; pairGate" + pairGate;//FIXME
+				"; pairGateA" + pairGateA;//FIXME
 	}
 }

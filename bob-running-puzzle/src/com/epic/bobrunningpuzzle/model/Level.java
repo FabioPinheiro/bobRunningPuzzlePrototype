@@ -38,10 +38,15 @@ public class Level implements ModelElement{
 		this.map.add(curve1);
 		//this.map.add(road4);
 		
-		/*Junction junctuin1 = new Junction(new Vector2(2, 6), 0.7f, 0f, "l", "l", "l");
-		Junction junctuin2 = new Junction(new Vector2(4, 6), 1f, 180f, "l", "H", "h");
+		Junction junctuin1 = new Junction(new Vector2(1, 6), 0.7f, 0f, "l", "l", "l");
+		Junction junctuin2 = new Junction(new Vector2(5, 6), 1f, 180f, "l", "H", "h");
 		this.map.add(junctuin1);
-		this.map.add(junctuin2);*/
+		this.map.add(junctuin2);
+		
+		Road road5= new StraightLine(curve1.getGateB(), junctuin2.getGateB(),"road5");
+		Road road6= new StraightLine(junctuin2.getGateC(), junctuin1.getGateC(),"road6");
+		this.map.add(road5);
+		this.map.add(road6);
 		
 
 	}
@@ -65,12 +70,12 @@ public class Level implements ModelElement{
 
 	@Override
 	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
-		bob.acceptRendererVisitor(rendererVisitor);
 		Iterator<Surmountable> it =  this.getIterator();
 		while(it.hasNext()){
 			Surmountable el = it.next();
 			el.acceptRendererVisitor(rendererVisitor);
 		}
+		bob.acceptRendererVisitor(rendererVisitor);
 	}
 	
 	/**

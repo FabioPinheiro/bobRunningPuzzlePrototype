@@ -19,7 +19,7 @@ public abstract class Traveler implements ModelElement{
 	 */
 	private float t=0;
 	private Gate entryGate;
-	private Vector2 position = new Vector2();;
+	private Vector2 position = new Vector2(), oldPosition = new Vector2();
 	
 	//get's and set's and add
 	public Gate getEntryGate() {return entryGate;}
@@ -32,11 +32,15 @@ public abstract class Traveler implements ModelElement{
 	//public void addT(float alpha) {this.t += alpha;}	
 	public Vector2 getPosition() {return position;}
 	public void setPosition(Vector2 position) {this.position = position;}
-
+	public Vector2 getDirection() {
+		return position.cpy().sub(oldPosition).clamp(1f, 1f);
+	}
+	
 	public abstract float getSIZE();
 	public abstract float getSPEED();
 	
 	public void calculatePosition(){
+		this.oldPosition.set(this.getPosition());
 		this.getEntryGate().getSurmountable().calculateAndUpdatePosition(this, this.getPosition());
 	}
 

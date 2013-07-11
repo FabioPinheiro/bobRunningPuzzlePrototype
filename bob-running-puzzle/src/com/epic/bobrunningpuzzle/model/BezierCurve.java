@@ -18,8 +18,8 @@ public class BezierCurve extends Road{
 	
 	
 	public static int getSegments() {return SEGMENTS;}
-	public float getCurveLength() {return curveLength;}
-	public void setCurveLength(float curveLength) {this.curveLength = curveLength;}
+	public float getLength() {return curveLength;}
+	public void setLength(float curveLength) {this.curveLength = curveLength;}
 	public Bezier<Vector2> getBezierCurve() {return bezierCurve;}
 	public Vector2 getVectorA() {return vectorA;}
 	public Vector2 getVectorB() {return vectorB;}
@@ -36,6 +36,9 @@ public class BezierCurve extends Road{
 		this.bezierCurve = new Bezier<Vector2>(pointsAux);
 		this.calculateLength();
 	}
+	/*public BezierCurve(Vector2 positionA, Vector2 vector, Vector2 positionB, String debugID){
+		this(positionA, vector, vector, positionB, debugID);
+	}*/
 	public BezierCurve(Gate pairGateA, Vector2 vectorA, Vector2 vectorB, Vector2 positionB, String debugID){
 		this(pairGateA.getPosition(), vectorA, vectorB, positionB, debugID);
 		Gate.pairOfGates(pairGateA, this.getGateA());
@@ -56,7 +59,7 @@ public class BezierCurve extends Road{
 			sum+=aux2.dst(aux1);
 			//LIXO Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#sum= "+ sum + " dst=" +aux2.dst(aux1) + " I=" + (float) i/this.SEGMENTS);
 		}
-		this.setCurveLength(sum);
+		this.setLength(sum);
 		//LIXO Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#CurveLength= "+ this.getCurveLength());
 	}
 	
@@ -68,17 +71,13 @@ public class BezierCurve extends Road{
 
 	@Override
 	public void updateTraveler(float delta, Traveler traveler) {
-		float remainingDelta = traveler.updatesStateTraveler(this.getCurveLength(), delta); //LIXO move(this.getOtherGate(traveler.getEntryGate()).getPosition(), delta);
-		if(remainingDelta != 0f){
-			traveler.surmountableTransition(this.getOtherGate(traveler.getEntryGate()).getPairGate(),remainingDelta);
-		}
+		super.updateTraveler(delta, traveler);
 	}
 
 	@Override
 	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
 		rendererVisitor.draw(this);
-		this.getGateA().acceptRendererVisitor(rendererVisitor);
-		this.getGateB().acceptRendererVisitor(rendererVisitor);
+		super.acceptRendererVisitor(rendererVisitor);
 	}
 	@Override
 	public void calculateAndUpdatePosition(Traveler traveler, Vector2 out) {

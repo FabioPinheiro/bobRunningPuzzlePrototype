@@ -19,10 +19,10 @@ public class Junction extends Surmountable{
 	}
 	
 	private final GateType gateType1, gateType2, gateType3;
-	private final Gate gate1, gate2, gate3;
 	private final Vector2 center;
-	private final Vector2 vecAuxAB, vecAuxBC, vecAuxAC;
 	private final float radius, angle;
+	private final BezierCurve curveAB, curveBC, curveAC;
+	private final Road roadA, roadB, roadC;
 	
 
 	
@@ -40,7 +40,77 @@ public class Junction extends Surmountable{
 				Junction.GateType.valueOf(gateType2),
 				Junction.GateType.valueOf(gateType3));
 	}
+	
+	
+	/**
+	 * @param center center of the object
+	 * @param radius of the gate to the center
+	 * @param angle is important to determine the position of the gates
+	 * @param gateType1 in {@link Junction.GateType}
+	 * @param gateType2 in {@link Junction.GateType}
+	 * @param gateType3 in {@link Junction.GateType}
+	 */
+	public Junction(Vector2 center, float radius, float angle, GateType gateType1, GateType gateType2, GateType gateType3) {
+		this.center = center;
+		this.radius = radius;
+		this.angle = angle;
+		
+		this.gateType1 = gateType1;
+		this.gateType2 = gateType2;
+		this.gateType3 = gateType3;
+		
+		Vector2 vecAux1 = new Vector2(-radius,0);
+		Vector2 vecAux2 = new Vector2(0,+radius);
+		Vector2 vecAux3 = new Vector2(+radius,0);
+		vecAux1.rotate(angle);
+		vecAux2.rotate(angle);
+		vecAux3.rotate(angle);
+		vecAux1.add(center);
+		vecAux2.add(center);
+		vecAux3.add(center);
+		
+		curveAB = new BezierCurve(vecAux1, vecAux1.cpy().lerp(center, 0.5f), vecAux2.cpy().lerp(center, 0.5f), vecAux2, "curveAB");
+		curveBC = new BezierCurve(vecAux2, vecAux2.cpy().lerp(center, 0.5f), vecAux3.cpy().lerp(center, 0.5f), vecAux3, "curveBC");
+		curveAC = new BezierCurve(vecAux1, vecAux1.cpy().lerp(center, 0.5f), vecAux3.cpy().lerp(center, 0.5f), vecAux3, "curveAC");
+		
+		roadA = new Road(vecAux1, curveAB.getGateA(), curveAC.getGateA(), "roadA");
+		roadB = new Road(vecAux2, curveBC.getGateA(), curveAB.getGateB(), "roadB");
+		roadC = new Road(vecAux3, curveAC.getGateB(), curveBC.getGateB(), "roadC");
+	}
+	
+	@Override
+	public void update(float delta) {
+		//none
+	}
 
+	@Override
+	public void updateTraveler(float delta, Traveler traveler) {
+		Gdx.app.error("ERROR!!",  this.getClass().getName()+"#updateTraveler- nunca devia chegar aqui!!!!");
+	}
+
+	@Override
+	public void calculateAndUpdatePosition(Traveler traveler, Vector2 out) {
+		Gdx.app.error("ERROR!!",  this.getClass().getName()+"#calculateAndUpdatePosition- nunca devia chegar aqui!!!!");
+	}
+
+	@Override
+	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
+		rendererVisitor.draw(this);
+		curveAB.acceptRendererVisitor(rendererVisitor);
+		curveBC.acceptRendererVisitor(rendererVisitor);
+		curveAC.acceptRendererVisitor(rendererVisitor);
+	}
+	
+	public GateType getGateType1() {return gateType1;}
+	public GateType getGateType2() {return gateType2;}
+	public GateType getGateType3() {return gateType3;}
+	public Gate getGateA() {return roadA.getGateA();}
+	public Gate getGateB() {return roadB.getGateA();}
+	public Gate getGateC() {return roadC.getGateA();}
+	public Vector2 getCenter() {return center;}
+	public float getRadius() {return radius;}
+	
+	
 	private GateType convertStringInGateType(String srt){
 		//Implementation in JDK 7
 		/*switch (srt) {
@@ -57,84 +127,4 @@ public class Junction extends Surmountable{
 		//Before JDK 7     FABIO-I dont have JDK 7 sry!!!!
 		return Junction.GateType.valueOf(srt); //XD nice
 	}
-	
-	
-	/**
-	 * @param center center of the object
-	 * @param radius of the gate to the center
-	 * @param angle is important to determine the position of the gates
-	 * @param gateType1 in {@link Junction.GateType}
-	 * @param gateType2 in {@link Junction.GateType}
-	 * @param gateType3 in {@link Junction.GateType}
-	 */
-	public Junction(Vector2 center, float radius, float angle, GateType gateType1, GateType gateType2, GateType gateType3) {
-		this.center = center;
-		this.radius = radius;
-		this.angle = angle;
-		this.gateType1 = gateType1;
-		this.gateType2 = gateType2;
-		this.gateType3 = gateType3;
-		Vector2 vecAux1 = new Vector2(-radius,0);
-		Vector2 vecAux2 = new Vector2(0,+radius);
-		Vector2 vecAux3 = new Vector2(+radius,0);
-		
-		vecAux1.rotate(angle);
-		vecAux2.rotate(angle);
-		vecAux3.rotate(angle);
-		vecAux1.add(center);
-		vecAux2.add(center);
-		vecAux3.add(center);
-		this.gate1 = new Gate(this, vecAux1);
-		this.gate2 = new Gate(this, vecAux2);
-		this.gate3 = new Gate(this, vecAux3);
-		
-		vecAuxAB = new Vector2(-radius,+radius);
-		vecAuxBC = new Vector2(+radius,+radius);
-		vecAuxAC = new Vector2(0,0);
-		vecAuxAB.rotate(angle);
-		vecAuxBC.rotate(angle);
-		vecAuxAC.rotate(angle);
-		vecAuxAB.add(center);
-		vecAuxBC.add(center);
-		vecAuxAC.add(center);
-	}
-	
-	@Override
-	public void update(float delta) {
-		//none
-	}
-
-	@Override
-	public void updateTraveler(float delta, Traveler traveler) {
-		//TODO
-		Surmountable.getController().isTouching();
-	}
-
-	@Override
-	public void calculateAndUpdatePosition(Traveler traveler, Vector2 out) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
-		rendererVisitor.draw(this);
-		gate1.acceptRendererVisitor(rendererVisitor);
-		gate2.acceptRendererVisitor(rendererVisitor);
-		gate3.acceptRendererVisitor(rendererVisitor);
-	}
-	
-	public GateType getGateType1() {return gateType1;}
-	public GateType getGateType2() {return gateType2;}
-	public GateType getGateType3() {return gateType3;}
-	public Gate getGate1() {return gate1;}
-	public Gate getGate2() {return gate2;}
-	public Gate getGate3() {return gate3;}
-	public Vector2 getCenter() {return center;}
-	public float getRadius() {return radius;}
-	public Vector2 getVecAuxAB() {return vecAuxAB;}
-	public Vector2 getVecAuxBC() {return vecAuxBC;}
-	public Vector2 getVecAuxAC() {return vecAuxAC;}
-
-	
 }
