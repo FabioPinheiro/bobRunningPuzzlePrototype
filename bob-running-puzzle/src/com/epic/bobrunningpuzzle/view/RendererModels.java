@@ -2,7 +2,9 @@ package com.epic.bobrunningpuzzle.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.epic.bobrunningpuzzle.model.Alley;
 import com.epic.bobrunningpuzzle.model.BezierCurve;
 import com.epic.bobrunningpuzzle.model.Bob;
@@ -38,7 +40,7 @@ public class RendererModels implements RendererVisitor{
 	@Override
 	public void draw(Bob el) {
 		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawBob");
-		spriteBatch.draw(bobTexture, el.getPosition().x-Bob.SIZE/2, el.getPosition().y-Bob.SIZE/2,Bob.SIZE,Bob.SIZE);
+		spriteBatch.draw(bobTexture, el.getPosition().x-Bob.SIZE/2, el.getPosition().y-Bob.SIZE/2, Bob.SIZE/2, Bob.SIZE/2,Bob.SIZE,Bob.SIZE, 1f, 1f, el.getDirectionAngle(), 0, 0, bobTexture.getWidth(), bobTexture.getHeight(), false, false);
 	}
 	@Override
 	public void draw(Gate el) {

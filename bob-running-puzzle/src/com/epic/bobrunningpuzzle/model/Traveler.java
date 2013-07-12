@@ -35,6 +35,9 @@ public abstract class Traveler implements ModelElement{
 	public Vector2 getDirection() {
 		return position.cpy().sub(oldPosition).clamp(1f, 1f);
 	}
+	public float getDirectionAngle() {
+		return getDirection().angle();
+	}
 	
 	public abstract float getSIZE();
 	public abstract float getSPEED();
