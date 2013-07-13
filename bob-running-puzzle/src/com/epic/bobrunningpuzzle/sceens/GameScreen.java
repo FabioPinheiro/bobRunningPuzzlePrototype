@@ -11,15 +11,19 @@ import com.badlogic.gdx.graphics.GL10;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.controller.GameController;
 import com.epic.bobrunningpuzzle.model.Level;
+import com.epic.bobrunningpuzzle.model.Level.GameState;
 import com.epic.bobrunningpuzzle.model.Surmountable;
 import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
 public class GameScreen implements Screen {
+	
+	public static final float StartToZoomInTheTraveler = 3f;
 
 	//private World world;
 	private Level level;
 	private WorldRenderer worldRenderer;
 	private GameController controller;
+	private float timer;
 	//private BobController controller;
 
 	private int width, height; // the width and height of the screen used by the Android touch events.
@@ -27,8 +31,9 @@ public class GameScreen implements Screen {
 	public GameScreen() {
 		controller = new GameController();
 		Surmountable.setController(controller);
-		level = new Level();
+		level = new Level(6f, 10f, 10f);
 		worldRenderer = new WorldRenderer(level, true);
+		this.timer = level.getStartTimer();
 	}
 	
 	@Override
@@ -37,7 +42,26 @@ public class GameScreen implements Screen {
 		//Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); FIXME
 
 		//controller.update(delta);
-		level.update(delta);
+		if(Level.getGameState() == GameState.INGAME){
+			timer += delta;
+			level.update(delta);
+		}else if(Level.getGameState() == GameState.PAUSE){
+			//FIXME show PAUSE
+		}else if(Level.getGameState() == GameState.START){
+			timer -=delta;
+			if(timer <= 0){
+				timer = 0;
+				Level.gameStart();
+				worldRenderer.zoomInTheTraveler(1);
+			}
+			else if(timer < StartToZoomInTheTraveler){
+				worldRenderer.zoomInTheTraveler(1-timer/StartToZoomInTheTraveler);
+			};
+		}else if(Level.getGameState() == GameState.FINISH){
+			//FIXME show END
+		}
+		
+			
 		worldRenderer.render();
 	}
 	
@@ -50,7 +74,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		worldRenderer.setSize(width, height);
+		//FIXME worldRenderer.calculateSize();
 		this.width = width;
 		this.height = height;
 	}

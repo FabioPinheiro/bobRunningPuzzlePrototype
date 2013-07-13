@@ -1,6 +1,8 @@
 package com.epic.bobrunningpuzzle.controller;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.epic.bobrunningpuzzle.model.Level;
 
 public class GameController implements InputProcessor{
 
@@ -14,8 +16,9 @@ public class GameController implements InputProcessor{
 
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
+		if(Input.Keys.P == keycode) //FIXME
+			Level.gamePause();
+		return true;
 	}
 
 	@Override
@@ -50,11 +53,13 @@ public class GameController implements InputProcessor{
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

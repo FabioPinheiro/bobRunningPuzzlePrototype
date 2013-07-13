@@ -1,5 +1,7 @@
 package com.epic.bobrunningpuzzle.view;
 
+import java.sql.Time;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -51,11 +53,11 @@ public class WorldRenderer{
 		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+" <new>");
 		this.level = level;
 		this.debug = debug;
-
 		
-		this.cam = new OrthographicCamera();//Gdx.graphics.getWidth(),Gdx.graphics.getHeight());//CAMERA_WIDTH, CAMERA_HEIGHT);
-		this.cam.setToOrtho(false, 20f, 20f);
-		//this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0);
+		this.calculateSize();
+		
+		this.cam = new OrthographicCamera();
+		this.zoomInTheTraveler(0);//show all map, not zoomed in the traveler
 		this.cam.update();
 
 		spriteBatch = new SpriteBatch();
@@ -95,12 +97,38 @@ public class WorldRenderer{
 	}
 	
 	private void updateCam() {
-		this.cam.position.set(level.getBob().getPosition().x, level.getBob().getPosition().y, 1);
-		this.cam.lookAt(level.getBob().getPosition().x, level.getBob().getPosition().y, 0);
-		this.camZoom();
+		this.camPositionAndLookAt();
+		//this.camZoom();
 		this.camRotate();
 		this.cam.update();
-		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#updateCam: this.cam:"+ this.cam.zoom);
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#updateCam");
+	}
+	
+	private void camPositionAndLookAt() {
+		if(Level.getGameState() == Level.GameState.INGAME){
+			this.cam.position.set(level.getBob().getPosition().x, level.getBob().getPosition().y, 1);
+			this.cam.lookAt(level.getBob().getPosition().x, level.getBob().getPosition().y, 0);
+		}
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#camPosition");
+	}
+	
+	/**
+	 * 0 show the all the map and the 1 show Traveler
+	 * @param percentage varies between 0 and 1
+	 */
+	public void zoomInTheTraveler(float percentage) { //FIXME ENG percentage
+		//this.cam.zoom = 1f*(1-percentage) + 0.3f*(percentage);
+		//FIXME ZOOM and the comfiguração do ecram
+		
+		float auxW = 5f;
+		float auxH = 5f * Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
+		
+		//this.cam.setToOrtho(false, level.getWidth()*(1-percentage) + auxW*(percentage), level.getHeight()*(1-percentage) + auxH*(percentage));
+		this.cam.setToOrtho(false, this.width*(1-percentage) + auxW*(percentage), this.height*(1-percentage) + auxH*(percentage));
+		float x= level.getWidth()/2*(1-percentage) + level.getBob().getPosition().x * percentage;
+		float y= level.getHeight()/2*(1-percentage) + level.getBob().getPosition().y * percentage;
+		this.cam.position.set(x, y, 1);
+		this.cam.lookAt(x, y, 0);
 	}
 	
 	private void camZoom() {
@@ -110,7 +138,7 @@ public class WorldRenderer{
 	private void camRotate() {
 		float aux = level.getBob().getDirectionAngle()-camAngle;
 		
-		if(Math.abs(aux) > 180){ //FIXME I (Fabio) don't like this!!
+		if(Math.abs(aux) > 180){
 			if(aux > 180) aux -= 360f;
 			if(aux < 180) aux += 360f;
 			if(Math.abs(aux) > 45){ //DEGUB LIXO FIXME I (Fabio) don't like this!!
@@ -189,12 +217,19 @@ public class WorldRenderer{
 		walkRightAnimation = new Animation(RUNNING_FRAME_DURATION, walkRightFrames);*/
 	}
 	
-	public void setSize (int w, int h) {
-		this.width = w;
-		this.height = h;
-		//ppuX = (float)width / CAMERA_WIDTH;
-		//ppuY = (float)height / CAMERA_HEIGHT;
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#setSize(): ppuX" + ppuX +"  ppuY"+ ppuY);
+	public void calculateSize () {
+		//FIXME ENG racioEcran racioLevel
+		float racioEcran = Gdx.graphics.getWidth()/Gdx.graphics.getHeight();
+		float racioLevel =  level.getWidth()/ level.getHeight();
+		if(racioLevel <= racioEcran){//ENG limitado pele altura do level
+			this.width = level.getHeight() * Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
+			this.height = level.getHeight();
+		}else {//ENG limitado pele Largura do level
+			this.width = level.getWidth();
+			this.height =level.getWidth() * Gdx.graphics.getHeight() / Gdx.graphics.getWidth();
+		}
+		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#calculateSize(): this.width" + this.width +"  this.height"+ this.height);
+		
 	}
 	
 }

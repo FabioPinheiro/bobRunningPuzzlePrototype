@@ -115,11 +115,10 @@ public class RendererDebugModels implements RendererVisitor{
 	}
 	
 	@Override
-	public void draw(Level level) {
+	public void draw(Level el) {
 		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawLevel");
-		Gdx.app.error("ERROR!!", "drawLevel- nunca devia chegar aqui!!!! devido ao visitor");
-		//level.getWidth(); //FIXME
-		//level.getHeight(); //FIXME
+		debugShapeRenderer.setColor(new Color(1, 1, 0, 1));
+		debugShapeRenderer.rect(0, 0, el.getWidth(), el.getHeight());
 	}
 	
 	@Override

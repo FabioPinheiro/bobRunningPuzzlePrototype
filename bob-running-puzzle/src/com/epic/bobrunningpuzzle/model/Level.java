@@ -2,9 +2,10 @@ package com.epic.bobrunningpuzzle.model;
 
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.epic.bobrunningpuzzle.controller.GameController;
+import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
@@ -12,9 +13,16 @@ public class Level implements ModelElement{
 	
 	public enum GameState {START, INGAME, PAUSE, FINISH};
 	
-	private static GameState gameState;
+	private static GameState gameState = GameState.START;
 	private static boolean win;
 	
+	public static GameState getGameState() {return gameState;}
+	public static boolean isWin() {return win;}
+	
+	public static void gameStart(){
+		if(gameState == GameState.START)
+			gameState = Level.GameState.INGAME;
+	}
 	public static void gameOver(boolean winner){
 		win = win;
 		gameState = Level.GameState.FINISH;
@@ -22,20 +30,39 @@ public class Level implements ModelElement{
 	public static void gamePause(){
 		if(gameState == GameState.INGAME)
 			gameState = Level.GameState.PAUSE;
-		if(gameState == GameState.PAUSE)
+		else if(gameState == GameState.PAUSE)
 			gameState = Level.GameState.INGAME;
+		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, "Level:"+"#gamePause !!!!!!!!!!!!!!!!!!!! = " + getGameState().toString());
 	}
+	
+	/** width in Metros*/
+	private final float width;
+	/** height in Metros*/
+	private final float height;
 	
 	private Array<Surmountable> map = new Array<Surmountable>();
 	private Start start;
 	private Bob bob;
+	private float startTimer;
 	
-	public Bob getBob() {
-		return bob;
-	}
+	/**@return width in Metros*/
+	public float getWidth() {return width;}
+	/**@return height in Metros*/
+	public float getHeight() {return height;}
+	
+	public float getStartTimer() {return startTimer;}
+	public Bob getBob() {return bob;}
 
 
-	public Level() {
+	/**
+	 * @param startTimer mast be biger them 3f.
+	 * @param width of the map in Metros.
+	 * @param height of the map in Metros.
+	 */
+	public Level(float startTimer, float width, float height) {
+		this.startTimer = startTimer;
+		this.width = width;
+		this.height = height;
 		
 		this.start = new Start(new Vector2(0,0));
 		this.bob= new Bob(this.getStart().getGate());
@@ -96,6 +123,7 @@ public class Level implements ModelElement{
 			el.acceptRendererVisitor(rendererVisitor);
 		}
 		bob.acceptRendererVisitor(rendererVisitor);
+		rendererVisitor.draw(this);
 	}
 	
 	/**
