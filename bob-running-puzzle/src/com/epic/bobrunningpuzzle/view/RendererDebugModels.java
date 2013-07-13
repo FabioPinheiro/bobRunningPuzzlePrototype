@@ -95,6 +95,11 @@ public class RendererDebugModels implements RendererVisitor{
 	@Override
 	public void draw(Goal el) {
 		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawGoal");
+		debugShapeRenderer.setColor(new Color(0, 1, 0, 1));
+		debugShapeRenderer.triangle(
+				el.getGate().getPosition().x - 0.2f, el.getGate().getPosition().y - 0.2f,
+				el.getGate().getPosition().x + 0.2f, el.getGate().getPosition().y - 0.2f,
+				el.getGate().getPosition().x + 0f, el.getGate().getPosition().y + 0.5f);
 	}
 	
 	@Override

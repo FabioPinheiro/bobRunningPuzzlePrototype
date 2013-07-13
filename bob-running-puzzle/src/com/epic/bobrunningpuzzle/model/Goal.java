@@ -4,7 +4,22 @@ import com.badlogic.gdx.math.Vector2;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 public class Goal extends Surmountable {
+	
+	
+	private final Gate gate;
 
+	public Gate getGate() {return gate;}
+	
+	public Goal(Vector2 position) {
+		this.gate = new Gate(this, position);
+	}
+	
+	public Goal(Gate gatePair) {
+		this.gate = new Gate(this, gatePair.getPosition());
+		Gate.pairOfGates(this.gate, gatePair);
+	}
+	
+	
 	@Override
 	public void update(float delta) {
 		// none
@@ -12,13 +27,12 @@ public class Goal extends Surmountable {
 
 	@Override
 	public void updateTraveler(float delta, Traveler traveler) {
-		// TODO Auto-generated method stub
+		Level.gameOver(true);
 	}
 	
 	@Override
 	public void calculateAndUpdatePosition(Traveler traveler, Vector2 out) {
-		// TODO Auto-generated method stub
-		
+		// none
 	}
 	
 	@Override
