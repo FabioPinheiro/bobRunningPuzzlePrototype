@@ -28,6 +28,7 @@ public class WorldRenderer{
 	
 	private Level level;
 	private OrthographicCamera cam;
+	private float camAngle = 0f;
 	
 	private float width;			//width = Gdx.graphics.getWidth();
 	private float height;			//height = Gdx.graphics.getHeight();
@@ -87,7 +88,7 @@ public class WorldRenderer{
 		if (debug) {
 			debugShapeRenderer.setProjectionMatrix(cam.combined);
 			debugShapeRenderer.begin(ShapeType.Line);
-			//FIXME rendererDebugModels.drawGridLines();
+			rendererDebugModels.drawGridLines();
 			level.acceptRendererVisitor(rendererDebugModels);
 			debugShapeRenderer.end();
 		}
@@ -96,9 +97,54 @@ public class WorldRenderer{
 	private void updateCam() {
 		this.cam.position.set(level.getBob().getPosition().x, level.getBob().getPosition().y, 1);
 		this.cam.lookAt(level.getBob().getPosition().x, level.getBob().getPosition().y, 0);
-		//this.cam.rotate(0.2f);
+		this.camZoom();
+		this.camRotate();
 		this.cam.update();
-		//Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#updateCam: this.cam.direction:"+ this.cam.direction.toString());
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#updateCam: this.cam:"+ this.cam.zoom);
+	}
+	
+	private void camZoom() {
+		cam.zoom = 0.3f;
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#camZoom: this.cam.zoom:"+ this.cam.zoom);
+	}
+	private void camRotate() {
+		float aux = level.getBob().getDirectionAngle()-camAngle;
+		
+		if(Math.abs(aux) > 180){ //FIXME I (Fabio) don't like this!!
+			if(aux > 180) aux -= 360f;
+			if(aux < 180) aux += 360f;
+			if(Math.abs(aux) > 45){ //DEGUB LIXO FIXME I (Fabio) don't like this!!
+				Gdx.app.error("ERROR!!",  this.getClass().getName()+"#camRotate: \"Level too sharp\" aux=" + aux);
+			}
+		}
+		
+		
+		if(Math.abs(aux) > 3f){
+			aux *= .8f;
+			if(aux >=0 ){	//positive
+				if(aux < +3f) aux = +3;
+				if(aux > +6f) aux = +6;
+			}
+			else {			//negative
+				if(aux > -3f) aux = -3;
+				if(aux < -6f) aux = -6;
+			}
+			
+		}
+		while (Math.abs(aux) > 2f) {
+			aux *= 0.7;
+		}
+		
+		
+		
+		this.cam.rotate(-aux);   //XXX it work but it makes sense?
+		camAngle += aux;
+		if (camAngle < 0) camAngle += 360;
+		if (camAngle > 360) {
+			Gdx.app.error("ERROR!!",  this.getClass().getName()+"#camRotate: (camAngle > 360)  this.camAngle=" + this.camAngle);
+			camAngle -= 360;
+		}
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#camRotate: this.camAngle:"+ this.camAngle + "  aux=" + aux);
 	}
 
 
