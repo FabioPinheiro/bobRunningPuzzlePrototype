@@ -2,12 +2,15 @@ package com.epic.bobrunningpuzzle.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 public class Road extends Surmountable {
 	
 	private Gate gateA, gateB;
 	
+	/** Used only by de Serializer {@link ModelJsonSerializer}*/
+	public Road() {super();}
 	/*public Road(String debugID) {
 		super(debugID);
 	}

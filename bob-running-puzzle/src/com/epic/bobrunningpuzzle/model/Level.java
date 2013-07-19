@@ -6,14 +6,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
+import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
 public class Level implements ModelElement{
 	
+	/** Used only by de Serializer {@link ModelJsonSerializer}*/
+	public Level() {}
+	
 	public enum GameState {START, INGAME, PAUSE, FINISH};
 	
-	private static GameState gameState = GameState.START;
+	private static GameState gameState = GameState.START; //FIXME não gosta!!!!!!!!!!!!!!!
 	private static boolean win;
 	
 	public static GameState getGameState() {return gameState;}
@@ -36,9 +40,9 @@ public class Level implements ModelElement{
 	}
 	
 	/** width in Metros*/
-	private final float width;
+	private float width;
 	/** height in Metros*/
-	private final float height;
+	private float height;
 	
 	private Array<Surmountable> map = new Array<Surmountable>();
 	private Start start;

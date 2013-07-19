@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
+import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 public class BezierCurve extends Road{
@@ -23,6 +24,9 @@ public class BezierCurve extends Road{
 	public Bezier<Vector2> getBezierCurve() {return bezierCurve;}
 	public Vector2 getVectorA() {return vectorA;}
 	public Vector2 getVectorB() {return vectorB;}
+	
+	/** Used only by de Serializer {@link ModelJsonSerializer}*/
+	public BezierCurve() {super();}
 	
 	/*private BezierCurve(String debugID, final Vector2... points){
 		super(debugID);

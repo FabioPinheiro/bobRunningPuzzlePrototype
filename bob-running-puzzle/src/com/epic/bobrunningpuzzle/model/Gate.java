@@ -6,6 +6,7 @@ package com.epic.bobrunningpuzzle.model;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
+import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 /**
@@ -14,10 +15,13 @@ import com.epic.bobrunningpuzzle.view.RendererVisitor;
  */
 public class Gate implements ModelElement{//extends Surmountable{
 
-	private final Surmountable surmountable;
+	private Surmountable surmountable;
 	private Gate pairGateA, pairGateB;
-	private final Vector2 position;
+	private Vector2 position;
 	
+	
+	/** Used only by de Serializer {@link ModelJsonSerializer}*/
+	public Gate() {}
 	
 	public Gate(Surmountable surmountable, Vector2 position) {
 		this.surmountable = surmountable;
@@ -34,17 +38,17 @@ public class Gate implements ModelElement{//extends Surmountable{
 		pairGateA.setPairGate(this);
 	}*/
 	
-	public boolean activated (){
-		return pairGateA != null;
-	}
+	public boolean isActivated(){return pairGateA != null;}
+	public boolean isComplex() {return this.pairGateB != null;}
 	
 	//get and set and is
-	public boolean isComplex() {return this.pairGateB != null;}
 	public Gate getPairGate() {
 		if(this.isComplex() && Surmountable.getController().isTouching())
 			return pairGateB;
 		else return pairGateA;
 	}
+	public Gate getPairGateA() {return pairGateA;}
+	public Gate getPairGateB() {return pairGateB;}
 	public void setPairGate(Gate pairGate) 	{this.pairGateA = pairGate;}
 	public void setPairGate(Gate pairGateA, Gate pairGateB) {
 		this.pairGateA = pairGateA;

@@ -1,14 +1,18 @@
 package com.epic.bobrunningpuzzle.model;
 
 import com.badlogic.gdx.math.Vector2;
+import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 public class Goal extends Surmountable {
 	
 	
-	private final Gate gate;
+	private Gate gate;
 
 	public Gate getGate() {return gate;}
+	
+	/** Used only by de Serializer {@link ModelJsonSerializer}*/
+	public Goal() {super();}
 	
 	public Goal(Vector2 position) {
 		this.gate = new Gate(this, position);

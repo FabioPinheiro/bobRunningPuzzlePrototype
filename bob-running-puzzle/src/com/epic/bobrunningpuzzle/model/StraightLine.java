@@ -1,10 +1,16 @@
 package com.epic.bobrunningpuzzle.model;
 
 import com.badlogic.gdx.math.Vector2;
+import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 public class StraightLine extends Road{
-
+	
+	/** Used only by de Serializer {@link ModelJsonSerializer}*/
+	public StraightLine() {
+		super();
+	}
+	
 	public StraightLine(Vector2 positionA, Vector2 positionB, String debugID) {
 		super(positionA, positionB, debugID);
 	}

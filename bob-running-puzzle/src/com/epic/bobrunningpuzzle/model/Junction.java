@@ -2,6 +2,7 @@ package com.epic.bobrunningpuzzle.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 public class Junction extends Surmountable{
@@ -18,13 +19,15 @@ public class Junction extends Surmountable{
 		l, h, L, H
 	}
 	
-	private final GateType gateType1, gateType2, gateType3;
-	private final Vector2 center;
-	private final float radius, angle;
-	private final BezierCurve curveAB, curveBC, curveAC;
-	private final Road roadA, roadB, roadC;
+	private GateType gateType1, gateType2, gateType3;
+	private Vector2 center;
+	private float radius, angle;
+	private BezierCurve curveAB, curveBC, curveAC;
+	private Road roadA, roadB, roadC;
 	
-
+	
+	/** Used only by de Serializer {@link ModelJsonSerializer}*/
+	public Junction() {super();}
 	
 	/**
 	 * @param center center of the object
