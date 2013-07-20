@@ -2,6 +2,7 @@ package com.epic.bobrunningpuzzle.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.epic.Point;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
@@ -62,23 +63,28 @@ public class Junction extends Surmountable{
 		this.gateType2 = gateType2;
 		this.gateType3 = gateType3;
 		
-		Vector2 vecAux1 = new Vector2(-radius,0);
-		Vector2 vecAux2 = new Vector2(0,+radius);
-		Vector2 vecAux3 = new Vector2(+radius,0);
-		vecAux1.rotate(angle);
-		vecAux2.rotate(angle);
-		vecAux3.rotate(angle);
-		vecAux1.add(center);
-		vecAux2.add(center);
-		vecAux3.add(center);
+		Point<Gate> vecAux1 = new Point<Gate>(Point.GENERIC, -radius, 0);
+		Point<Gate> vecAux2 = new Point<Gate>(Point.GENERIC, 0, +radius);
+		Point<Gate> vecAux3 = new Point<Gate>(Point.GENERIC, +radius, 0);
+		vecAux1.getPosition().rotate(angle);
+		vecAux2.getPosition().rotate(angle);
+		vecAux3.getPosition().rotate(angle);
+		vecAux1.getPosition().add(center);
+		vecAux2.getPosition().add(center);
+		vecAux3.getPosition().add(center);
 		
-		curveAB = new BezierCurve(vecAux1, vecAux1.cpy().lerp(center, 0.5f), vecAux2.cpy().lerp(center, 0.5f), vecAux2, "curveAB");
-		curveBC = new BezierCurve(vecAux2, vecAux2.cpy().lerp(center, 0.5f), vecAux3.cpy().lerp(center, 0.5f), vecAux3, "curveBC");
-		curveAC = new BezierCurve(vecAux1, vecAux1.cpy().lerp(center, 0.5f), vecAux3.cpy().lerp(center, 0.5f), vecAux3, "curveAC");
+		Point<Gate> vecAux1Cpy = new Point<Gate>(Point.GENERIC, vecAux1.getPosition());
+		Point<Gate> vecAux2Cpy = new Point<Gate>(Point.GENERIC, vecAux2.getPosition());
+		Point<Gate> vecAux3Cpy = new Point<Gate>(Point.GENERIC, vecAux3.getPosition());
 		
-		roadA = new Road(vecAux1, curveAB.getGateA(), curveAC.getGateA(), "roadA");
-		roadB = new Road(vecAux2, curveBC.getGateA(), curveAB.getGateB(), "roadB");
-		roadC = new Road(vecAux3, curveAC.getGateB(), curveBC.getGateB(), "roadC");
+
+		curveAB = new BezierCurve(vecAux1Cpy, vecAux1.getPosition().cpy().lerp(center, 0.5f), vecAux2.getPosition().cpy().lerp(center, 0.5f), vecAux2Cpy, "curveAB");
+		curveBC = new BezierCurve(vecAux2Cpy, vecAux2.getPosition().cpy().lerp(center, 0.5f), vecAux3.getPosition().cpy().lerp(center, 0.5f), vecAux3Cpy, "curveBC");
+		curveAC = new BezierCurve(vecAux1Cpy, vecAux1.getPosition().cpy().lerp(center, 0.5f), vecAux3.getPosition().cpy().lerp(center, 0.5f), vecAux3Cpy, "curveAC");
+		
+		roadA = new Road(vecAux1, curveAB.getGateA().getPoint(), curveAC.getGateA().getPoint(), "roadA");
+		roadB = new Road(vecAux2, curveBC.getGateA().getPoint(), curveAB.getGateB().getPoint(), "roadB");
+		roadC = new Road(vecAux3, curveAC.getGateB().getPoint(), curveBC.getGateB().getPoint(), "roadC");
 	}
 	
 	@Override

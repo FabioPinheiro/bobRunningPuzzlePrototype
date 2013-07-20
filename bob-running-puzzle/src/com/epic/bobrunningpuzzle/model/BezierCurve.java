@@ -1,11 +1,8 @@
 package com.epic.bobrunningpuzzle.model;
 
-import java.awt.Point;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
-import com.epic.bobrunningpuzzle.BobRunningPuzzle;
+import com.epic.Point;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
@@ -32,7 +29,7 @@ public class BezierCurve extends Road{
 		super(debugID);
 		this.bezierCurve = new Bezier<Vector2>(points);
 	}*/
-	public BezierCurve(Vector2 positionA, Vector2 vectorA, Vector2 vectorB, Vector2 positionB, String debugID){
+	public BezierCurve(Point<Gate> positionA, Vector2 vectorA, Vector2 vectorB, Point<Gate> positionB, String debugID){
 		super(positionA, positionB, debugID);
 		this.vectorA = vectorA;
 		this.vectorB = vectorB;
@@ -43,23 +40,20 @@ public class BezierCurve extends Road{
 	/*public BezierCurve(Vector2 positionA, Vector2 vector, Vector2 positionB, String debugID){
 		this(positionA, vector, vector, positionB, debugID);
 	}*/
-	public BezierCurve(Gate pairGateA, Vector2 vectorA, Vector2 vectorB, Vector2 positionB, String debugID){
-		this(pairGateA.getPosition(), vectorA, vectorB, positionB, debugID);
-		Gate.pairOfGates(pairGateA, this.getGateA());
+	public BezierCurve(Gate pairGateA, Vector2 vectorA, Vector2 vectorB, Point<Gate> positionB, String debugID){
+		this(pairGateA.getPoint(), vectorA, vectorB, positionB, debugID);
 	}
 	public BezierCurve(Gate gatePairA, Vector2 vectorA, Vector2 vectorB, Gate gatePairB, String debugID){
-		this(gatePairA.getPosition(), vectorA, vectorB, gatePairB.getPosition(), debugID);
-		Gate.pairOfGates(gatePairA, this.getGateA());
-		Gate.pairOfGates(gatePairB, this.getGateB());
+		this(gatePairA.getPoint(), vectorA, vectorB, gatePairB.getPoint(), debugID);
 	}
 	
 	private void calculateLength(){
 		Vector2 aux1 = new Vector2(), aux2 = new Vector2();
 		float sum=0;
 		aux1.set(getGateA().getPosition());
-		for(int i=1;i<=this.SEGMENTS;i++ ){
+		for(int i=1;i<=BezierCurve.SEGMENTS;i++ ){
 			aux2.set(aux1);
-			this.bezierCurve.valueAt(aux1, (float) i/this.SEGMENTS);
+			this.bezierCurve.valueAt(aux1, (float) i/BezierCurve.SEGMENTS);
 			sum+=aux2.dst(aux1);
 			//LIXO Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#sum= "+ sum + " dst=" +aux2.dst(aux1) + " I=" + (float) i/this.SEGMENTS);
 		}

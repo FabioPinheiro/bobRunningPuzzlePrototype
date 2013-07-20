@@ -1,6 +1,7 @@
 package com.epic.bobrunningpuzzle.model;
 
 import com.badlogic.gdx.math.Vector2;
+import com.epic.Point;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
@@ -11,17 +12,14 @@ public class StraightLine extends Road{
 		super();
 	}
 	
-	public StraightLine(Vector2 positionA, Vector2 positionB, String debugID) {
+	public StraightLine(Point<Gate> positionA, Point<Gate> positionB, String debugID) {
 		super(positionA, positionB, debugID);
 	}
-	public StraightLine(Gate gatePairA, Vector2 positionB, String debugID) {
-		super(gatePairA.getPosition(), positionB, debugID);
-		Gate.pairOfGates(gatePairA, this.getGateA());
+	public StraightLine(Gate gatePairA, Point<Gate> pointB, String debugID) {
+		super(gatePairA.getPoint(), pointB, debugID);
 	}
 	public StraightLine(Gate gatePairA, Gate gatePairB, String debugID) {
-		super(gatePairA.getPosition(), gatePairB.getPosition(), debugID);
-		Gate.pairOfGates(gatePairA, this.getGateA());
-		Gate.pairOfGates(gatePairB, this.getGateB());
+		super(gatePairA.getPoint(), gatePairB.getPoint(), debugID);
 	}
 	
 	@Override

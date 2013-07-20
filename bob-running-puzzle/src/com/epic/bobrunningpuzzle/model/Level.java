@@ -5,6 +5,7 @@ import java.util.Iterator;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.epic.Point;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
@@ -64,19 +65,25 @@ public class Level implements ModelElement{
 	 * @param height of the map in Metros.
 	 */
 	public Level(float startTimer, float width, float height) {
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, "##########################################");
 		this.startTimer = startTimer;
 		this.width = width;
 		this.height = height;
 		
-		this.start = new Start(new Vector2(0,0));
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, "000000000000000000000000000000000000000000");
+		this.start = new Start(new Point<Gate>(Point.GENERIC, 0,0));
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, "111111111111111111111111111111111111111111");
 		this.bob= new Bob(this.getStart().getGate());
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, "222222222222222222222222222222222222222222");
 		
-		Road road1= new StraightLine(start.getGate(),new Vector2(1,1),"pointA");
-		Road road2= new StraightLine(road1.getGateB(),new Vector2(2,-1),"pointB");
-		Road road3= new StraightLine(road2.getGateB(),new Vector2(5,2),"C");
+		Road road1= new StraightLine(start.getGate(),new Point<Gate>(Point.GENERIC,1,1),"pointA");
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, "333333333333333333333333333333333333333333");
+		Road road2= new StraightLine(road1.getGateB(),new Point<Gate>(Point.GENERIC,2,-1),"pointB");
+		Road road3= new StraightLine(road2.getGateB(),new Point<Gate>(Point.GENERIC,5,2),"C");
 		//Road road4= new StraightLine(road3.getGateB(), road1.getGateA(),"D");
 		
-		BezierCurve curve1 = new BezierCurve(road3.getGateB(), new Vector2(5,10), new Vector2(2,-5), new Vector2(2,2), "curve1");
+		BezierCurve curve1 = new BezierCurve(road3.getGateB(), new Vector2(5,10), new Vector2(2,-5), new Point<Gate>(Point.GENERIC,2,2), "curve1");
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, "444444444444444444444444444444444444444444");
 		
 		
 		this.map.add(start);
@@ -99,7 +106,9 @@ public class Level implements ModelElement{
 		Goal goal1 = new Goal(junctuin1.getGateA());
 		this.map.add(goal1);
 		
-
+		new Point<Gate>();
+		
+		Gdx.app.log(BobRunningPuzzle.GAMELOG, "##########################################");
 	}
 	
 	public void update(float delta){
