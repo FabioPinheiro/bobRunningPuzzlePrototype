@@ -5,11 +5,15 @@ import com.epic.Place;
 import com.epic.bobrunningpuzzle.model.Gate;
 
 public class PlaceManager {
-	/** Class with private constructor is static.*/
-	private PlaceManager() {}
+	///** Class with private constructor is static.*/
+	//private PlaceManager() {}
 	private static ArrayMap<String, Place> map = new ArrayMap<String, Place>();
-	private static GenericIdentifier genericIdentifier = new GenericIdentifier();
+	public static ArrayMap<String, Place> getMap() {return map;}
+	public static void setMap(ArrayMap<String, Place> map) {PlaceManager.map = map;}
+
+	private GenericIdentifier genericIdentifier = new GenericIdentifier();
 	
+	public static int sizeOfMap(){return PlaceManager.size1();}
 	private static int size1(){return PlaceManager.map.size;}
 	private static int size2(String key){return PlaceManager.map.get(key).size();}
 	/*public Points() {
@@ -34,6 +38,8 @@ public class PlaceManager {
 	
 	public static class GenericIdentifier {
 		private static String NAME = "ID";//"GenericIdentifier";
+		public static String getNAME() {return NAME;}
+		public static void setNAME(String nAME) {NAME = nAME;}
 		public static String newIdentifier() {return "[" + NAME + ":" + map.size + "]";}
 		public static String newSubIdentifier(String key) {return "[" + NAME + "_sub:" + PlaceManager.size2(key) + "]";}
 		public static String newSubIdentifier(Place point) {return "[" + NAME + "_sub:" + point.size() + "]";}

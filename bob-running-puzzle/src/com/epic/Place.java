@@ -10,6 +10,9 @@ public class Place{
 	private String key;
 	ArrayMap<String, Gate> collection = new ArrayMap<String, Gate>();
 	
+	public ArrayMap<String, Gate> getCollection() {return collection;}
+	public void setCollection(ArrayMap<String, Gate> collection) {this.collection = collection;}
+	
 	public Vector2 getPosition() {return position;}
 	public int size(){ return this.collection.size;}
 	public String getKey() {return this.key;}

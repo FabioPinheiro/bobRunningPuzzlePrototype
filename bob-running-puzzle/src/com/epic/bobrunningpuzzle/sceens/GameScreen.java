@@ -8,10 +8,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.epic.PlaceManager;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.controller.GameController;
 import com.epic.bobrunningpuzzle.model.Level;
 import com.epic.bobrunningpuzzle.model.Level.GameState;
+import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.model.Surmountable;
 import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
@@ -31,7 +33,16 @@ public class GameScreen implements Screen {
 	public GameScreen() {
 		controller = new GameController();
 		Surmountable.setController(controller);
-		level = new Level(6f, 10f, 10f);
+		level = new Level();
+		
+		System.out.println("###################### toJson 1");
+		ModelJsonSerializer x = new ModelJsonSerializer();
+		String str = x.json.toJson( level, Object.class);
+		System.out.println(str);
+		System.out.println("###################### toJson 2");
+		System.out.println("C-"+ x.json.prettyPrint(level));
+		System.out.println("###################### toJson 3");
+		
 		worldRenderer = new WorldRenderer(level, true);
 		this.timer = level.getStartTimer();
 	}

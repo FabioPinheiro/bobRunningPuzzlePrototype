@@ -13,8 +13,6 @@ import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
 public class Level implements ModelElement{
 	
-	/** Used only by de Serializer {@link ModelJsonSerializer}*/
-	public Level() {}
 	
 	public enum GameState {START, INGAME, PAUSE, FINISH};
 	
@@ -40,90 +38,35 @@ public class Level implements ModelElement{
 		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, "Level:"+"#gamePause !!!!!!!!!!!!!!!!!!!! = " + getGameState().toString());
 	}
 	
-	/** width in Metros*/
-	private float width;
-	/** height in Metros*/
-	private float height;
-	
-	private Array<Surmountable> map = new Array<Surmountable>();
-	private Start start;
 	private Bob bob;
-	private float startTimer;
-	
-	/**@return width in Metros*/
-	public float getWidth() {return width;}
-	/**@return height in Metros*/
-	public float getHeight() {return height;}
-	
-	public float getStartTimer() {return startTimer;}
 	public Bob getBob() {return bob;}
-
-
-	/**
-	 * @param startTimer mast be biger them 3f.
-	 * @param width of the map in Metros.
-	 * @param height of the map in Metros.
-	 */
-	public Level(float startTimer, float width, float height) {
+	private LevelStructure levelStructure = new LevelStructure();
+	/**{@link LevelStructure#getWidth()}*/
+	public float getWidth() {return this.levelStructure.getWidth();}
+	/**{@link LevelStructure#getHeight()}*/
+	public float getHeight() {return this.levelStructure.getHeight();}
+	/**{@link LevelStructure#getStartTimer()}*/
+	public float getStartTimer() {return this.levelStructure.getStartTimer();}
+	
+	
+	/** Used only FIXME by de Serializer {@link ModelJsonSerializer}*/
+	public Level() {
 		Gdx.app.log(BobRunningPuzzle.GAMELOG, "##########################################");
-		this.startTimer = startTimer;
-		this.width = width;
-		this.height = height;
-		
-		this.start = new Start(new Place(0,0));
 		this.bob= new Bob(this.getStart().getGate());
-		
-		Road road1= new StraightLine(start.getGate(),new Place(1,1),"pointA");
-		Road road2= new StraightLine(road1.getGateB(),new Place(2,-1),"pointB");
-		Road road3= new StraightLine(road2.getGateB(),new Place(5,2),"C");
-		//Road road4= new StraightLine(road3.getGateB(), road1.getGateA(),"D");
-		
-		BezierCurve curve1 = new BezierCurve(road3.getGateB(), new Vector2(5,10), new Vector2(2,-5), new Place(2,2), "curve1");
-		
-		
-		this.map.add(start);
-		this.map.add(road1);
-		this.map.add(road2);
-		this.map.add(road3);
-		this.map.add(curve1);
-		//this.map.add(road4);
-		
-		Junction junctuin1 = new Junction(new Vector2(1, 6), 0.7f, 0f, "l", "l", "l");
-		Junction junctuin2 = new Junction(new Vector2(5, 6), 1f, 180f, "l", "H", "h");
-		this.map.add(junctuin1);
-		this.map.add(junctuin2);
-		
-		Road road5= new StraightLine(curve1.getGateB(), junctuin2.getGateB(),"road5");
-		Road road6= new StraightLine(junctuin2.getGateC(), junctuin1.getGateC(),"road6");
-		this.map.add(road5);
-		this.map.add(road6);
-		
-		Goal goal1 = new Goal(junctuin1.getGateA());
-		this.map.add(goal1);
-		
-		//new Points<Gate>();
 	}
 	
 	public void update(float delta){
 		bob.update(delta);
-		Iterator<Surmountable> it =  this.getIterator();
+		Iterator<Surmountable> it =  this.levelStructure.getAllSurmountable().iterator();;
 		while(it.hasNext()){
 			Surmountable el = it.next();
 			el.update(delta);
 		}
 	}
-	/**
-	 * the Iterator must must be released after use
-	 * @return a Iterator of all {@link Surmountable} in the level;
-	 * @see WorldRenderer#render()
-	 */
-	public Iterator<Surmountable> getIterator(){
-		return map.iterator();
-	}
 
 	@Override
 	public void acceptRendererVisitor(RendererVisitor rendererVisitor) {
-		Iterator<Surmountable> it =  this.getIterator();
+		Iterator<Surmountable> it =  this.levelStructure.getAllSurmountable().iterator(); //FIXME pouco eficiente
 		while(it.hasNext()){
 			Surmountable el = it.next();
 			el.acceptRendererVisitor(rendererVisitor);
@@ -136,13 +79,13 @@ public class Level implements ModelElement{
 	 * @return the strat of the level
 	 * @see Strat#updateBob(float delta, Bob bob)
 	 */
-	public Start getStart(){return start;}
+	public Start getStart(){return this.levelStructure.getStart(0/*FIXME*/);}
 
 	@Override
 	public String debugString() {
 		String newString;
 		newString = bob.toString() + "\n";
-		Iterator<Surmountable> it =  this.getIterator();
+		Iterator<Surmountable> it =  this.levelStructure.getAllSurmountable().iterator();
 		while(it.hasNext()){
 			Surmountable el = it.next();
 			newString += el.debugString() +"\n" ;
