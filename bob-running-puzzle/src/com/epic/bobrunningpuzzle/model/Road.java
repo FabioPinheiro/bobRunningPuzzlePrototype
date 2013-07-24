@@ -1,8 +1,7 @@
 package com.epic.bobrunningpuzzle.model;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.epic.Point;
+import com.epic.Place;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
@@ -19,7 +18,7 @@ public class Road extends Surmountable {
 		this.gateA = gateA;
 		this.gateB = gateB;		
 	}*/
-	public Road(Point<Gate> pointA, Point<Gate> pointB, String debugID) {
+	public Road(Place pointA, Place pointB, String debugID) {
 		super(debugID);
 		this.gateA = new Gate(this, pointA);
 		this.gateB = new Gate(this, pointB);
@@ -35,20 +34,20 @@ public class Road extends Surmountable {
 		this.gateA = new Gate(this, gateA);
 		this.gateB = new Gate(this, gateB);
 	}*/
-	/**
+	/*
 	 * This constructor is used by {@link Junction}
 	 * @param pointA coordinates of gatePairA
 	 * @param gatePairB1 expected with equal coordinates of gatePairB2
 	 * @param gatePairB2 expected with equal coordinates of gatePairB1
 	 * @param debugID
-	 */
-	public Road(Point<Gate> pointA, Point<Gate> pointB1, Point<Gate> pointB2, String debugID) {
+	 *
+	public Road(Place pointA, Place pointB1, Place pointB2, String debugID) {
 		super(debugID);
 		this.gateA = new Gate(this, pointA);
 		if(!pointB1.getPosition().equals(pointB2.getPosition()))
 			Gdx.app.error("ERROR!!", this.getClass().getName()+"#Road: Gates with different coordinate");
-		this.gateB = new Gate(this, pointB1,0);
-	}
+		this.gateB = new Gate(this, pointB1);
+	}*/
 	
 
 	@Override

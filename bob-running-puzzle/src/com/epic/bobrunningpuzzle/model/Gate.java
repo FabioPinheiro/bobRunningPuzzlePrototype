@@ -5,7 +5,9 @@ package com.epic.bobrunningpuzzle.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.epic.Point;
+import com.epic.PlaceIdentifier;
+import com.epic.PlaceManager;
+import com.epic.Place;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
@@ -17,41 +19,29 @@ import com.epic.bobrunningpuzzle.view.RendererVisitor;
 public class Gate implements ModelElement{//extends Surmountable{
 
 	private Surmountable surmountable;
-	//private Gate pairGateA, pairGateB;
-	private Point<Gate> point; //FIXME point
-	private String pointId = null;
-	private int priority = -1;
+	private PlaceIdentifier identifier;
+	
+	public String getKey() {return this.identifier.getKey();}
+	
+	public Place getThisGatePoint(){return PlaceManager.getPoint(this.getKey());}
+	
 	
 	/** Used only by de Serializer {@link ModelJsonSerializer}*/
-	public Gate(String pointId, int priority) {
-		this.pointId = pointId;
-		this.priority = priority;
+	public Gate() {}
+	
+	public Gate(Surmountable surmountable, String pointId) {
+		this.surmountable = surmountable;
+		this.identifier= PlaceManager.register(pointId, this);
+	}
+	public Gate(Surmountable surmountable, Gate gate) {
+		this(surmountable, gate.getKey());
+	}
+	public Gate(Surmountable surmountable, Place point) {
+		this(surmountable, point.getKey());
 	}
 	
-	/**
-	 * 
-	 * @param surmountable
-	 * @param point
-	 * @param priority '0' is the most priority, the smaller the higher the priority 
-	 */
-	public Gate(Surmountable surmountable, Point<Gate> point, int priority) {
-		this.surmountable = surmountable;
-		this.point = point;
-		this.point.register(this, priority);
-	}
-	/**
-	 * lower priority
-	 * @param surmountable
-	 * @param point
-	 */
-	public Gate(Surmountable surmountable, Point<Gate> point) {
-		this.surmountable = surmountable;
-		this.point = point;
-		this.point.register(this);
-	}
-	
-	public boolean isActivated(){return this.point.sizeOfTheCollection() > 1;}
-	public boolean isComplex() {return this.point.sizeOfTheCollection() > 2;}
+	public boolean isActivated(){return this.getThisGatePoint().size() > 1;}
+	public boolean isComplex() {return this.getThisGatePoint().size() > 2;}
 	
 	//get and set and is
 	public Gate getPairGate() {
@@ -59,11 +49,10 @@ public class Gate implements ModelElement{//extends Surmountable{
 			return this.getPairGateB();
 		else return this.getPairGateA();
 	}
-	public Gate getPairGateA() {return (Gate) Point.getPoint(this.point.getId()).getOtherT(this,0);}
-	public Gate getPairGateB() {return (Gate) Point.getPoint(this.point.getId()).getOtherT(this,1);}
+	public Gate getPairGateA() {return PlaceManager.getPoint(this.getKey()).getOtherGateIndex(this,0);}
+	public Gate getPairGateB() {return PlaceManager.getPoint(this.getKey()).getOtherGateIndex(this,1);}
 	public Surmountable getSurmountable() 	{return surmountable;}
-	public Point<Gate> getPoint() 			{return point;}
-	public Vector2 getPosition() 			{return point.getPosition();}
+	public Vector2 getPosition() 			{return this.getThisGatePoint().getPosition();}
 
 	@Override
 	public void update(float delta) {
@@ -86,7 +75,7 @@ public class Gate implements ModelElement{//extends Surmountable{
 
 	@Override
 	public String debugString() {
-		return "Gate:: Point.id:" + point.getId() +
+		return "Gate:: this.getKey():" + this.getKey() +
 				"; point:" + getPosition().toString()+
 				"; surmountable:" + surmountable.toString() +
 				"; pairGateA" + getPairGateA() +//FIXME

@@ -2,7 +2,7 @@ package com.epic.bobrunningpuzzle.model;
 
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
-import com.epic.Point;
+import com.epic.Place;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
@@ -29,8 +29,8 @@ public class BezierCurve extends Road{
 		super(debugID);
 		this.bezierCurve = new Bezier<Vector2>(points);
 	}*/
-	public BezierCurve(Point<Gate> positionA, Vector2 vectorA, Vector2 vectorB, Point<Gate> positionB, String debugID){
-		super(positionA, positionB, debugID);
+	public BezierCurve(Place pointA, Vector2 vectorA, Vector2 vectorB, Place pointB, String debugID){
+		super(pointA, pointB, debugID);
 		this.vectorA = vectorA;
 		this.vectorB = vectorB;
 		Vector2 pointsAux[] = {this.getGateA().getPosition(),this.getVectorA(), this.getVectorB(), this.getGateB().getPosition()};
@@ -40,11 +40,11 @@ public class BezierCurve extends Road{
 	/*public BezierCurve(Vector2 positionA, Vector2 vector, Vector2 positionB, String debugID){
 		this(positionA, vector, vector, positionB, debugID);
 	}*/
-	public BezierCurve(Gate pairGateA, Vector2 vectorA, Vector2 vectorB, Point<Gate> positionB, String debugID){
-		this(pairGateA.getPoint(), vectorA, vectorB, positionB, debugID);
+	public BezierCurve(Gate pairGateA, Vector2 vectorA, Vector2 vectorB, Place point, String debugID){
+		this(pairGateA.getThisGatePoint(), vectorA, vectorB, point, debugID);
 	}
 	public BezierCurve(Gate gatePairA, Vector2 vectorA, Vector2 vectorB, Gate gatePairB, String debugID){
-		this(gatePairA.getPoint(), vectorA, vectorB, gatePairB.getPoint(), debugID);
+		this(gatePairA.getThisGatePoint(), vectorA, vectorB, gatePairB.getThisGatePoint(), debugID);
 	}
 	
 	private void calculateLength(){

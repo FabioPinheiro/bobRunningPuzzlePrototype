@@ -2,7 +2,7 @@ package com.epic.bobrunningpuzzle.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.epic.Point;
+import com.epic.Place;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
@@ -23,7 +23,7 @@ public class Junction extends Surmountable{
 	private GateType gateType1, gateType2, gateType3;
 	private Vector2 center;
 	private float radius, angle;
-	private BezierCurve curveAB, curveBC, curveAC;
+	private BezierCurve curveAB, curveBC, curveCA;
 	private Road roadA, roadB, roadC;
 	
 	
@@ -63,9 +63,10 @@ public class Junction extends Surmountable{
 		this.gateType2 = gateType2;
 		this.gateType3 = gateType3;
 		
-		Point<Gate> vecAux1 = new Point<Gate>(Point.GENERIC, -radius, 0);
-		Point<Gate> vecAux2 = new Point<Gate>(Point.GENERIC, 0, +radius);
-		Point<Gate> vecAux3 = new Point<Gate>(Point.GENERIC, +radius, 0);
+		Place vecAux1 = new Place(-radius, 0);
+		Place vecAux2 = new Place(0, +radius);
+		Place vecAux3 = new Place(+radius, 0);
+		
 		vecAux1.getPosition().rotate(angle);
 		vecAux2.getPosition().rotate(angle);
 		vecAux3.getPosition().rotate(angle);
@@ -73,18 +74,18 @@ public class Junction extends Surmountable{
 		vecAux2.getPosition().add(center);
 		vecAux3.getPosition().add(center);
 		
-		Point<Gate> vecAux1Cpy = new Point<Gate>(Point.GENERIC, vecAux1.getPosition());
-		Point<Gate> vecAux2Cpy = new Point<Gate>(Point.GENERIC, vecAux2.getPosition());
-		Point<Gate> vecAux3Cpy = new Point<Gate>(Point.GENERIC, vecAux3.getPosition());
+		Place vecAuxA = new Place(vecAux1.getPosition());
+		Place vecAuxB = new Place(vecAux2.getPosition());
+		Place vecAuxC = new Place(vecAux3.getPosition());
 		
+		this.roadA = new Road(vecAux1, vecAuxA, "roadA");
+		this.roadB = new Road(vecAux2, vecAuxB, "roadB");
+		this.roadC = new Road(vecAux3, vecAuxC, "roadC");
 
-		curveAB = new BezierCurve(vecAux1Cpy, vecAux1.getPosition().cpy().lerp(center, 0.5f), vecAux2.getPosition().cpy().lerp(center, 0.5f), vecAux2Cpy, "curveAB");
-		curveBC = new BezierCurve(vecAux2Cpy, vecAux2.getPosition().cpy().lerp(center, 0.5f), vecAux3.getPosition().cpy().lerp(center, 0.5f), vecAux3Cpy, "curveBC");
-		curveAC = new BezierCurve(vecAux1Cpy, vecAux1.getPosition().cpy().lerp(center, 0.5f), vecAux3.getPosition().cpy().lerp(center, 0.5f), vecAux3Cpy, "curveAC");
+		this.curveAB = new BezierCurve(vecAuxA, vecAux1.getPosition().cpy().lerp(center, 0.5f), vecAux2.getPosition().cpy().lerp(center, 0.5f), vecAuxB, "curveAB");
+		this.curveBC = new BezierCurve(vecAuxB, vecAux2.getPosition().cpy().lerp(center, 0.5f), vecAux3.getPosition().cpy().lerp(center, 0.5f), vecAuxC, "curveBC");
+		this.curveCA = new BezierCurve(vecAuxC, vecAux1.getPosition().cpy().lerp(center, 0.5f), vecAux3.getPosition().cpy().lerp(center, 0.5f), vecAuxA, "curveAC");
 		
-		roadA = new Road(vecAux1, curveAB.getGateA().getPoint(), curveAC.getGateA().getPoint(), "roadA");
-		roadB = new Road(vecAux2, curveBC.getGateA().getPoint(), curveAB.getGateB().getPoint(), "roadB");
-		roadC = new Road(vecAux3, curveAC.getGateB().getPoint(), curveBC.getGateB().getPoint(), "roadC");
 	}
 	
 	@Override
@@ -107,7 +108,7 @@ public class Junction extends Surmountable{
 		rendererVisitor.draw(this);
 		curveAB.acceptRendererVisitor(rendererVisitor);
 		curveBC.acceptRendererVisitor(rendererVisitor);
-		curveAC.acceptRendererVisitor(rendererVisitor);
+		curveCA.acceptRendererVisitor(rendererVisitor);
 	}
 	
 	public GateType getGateType1() {return gateType1;}

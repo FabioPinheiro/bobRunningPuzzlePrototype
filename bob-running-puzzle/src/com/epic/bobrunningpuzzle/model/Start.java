@@ -2,8 +2,7 @@ package com.epic.bobrunningpuzzle.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.epic.Point;
-import com.epic.bobrunningpuzzle.BobRunningPuzzle;
+import com.epic.Place;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
@@ -16,7 +15,7 @@ public class Start extends Surmountable {
 	
 	public Gate getGate() {return gate;}
 	
-	public Start(Point<Gate> point) {
+	public Start(Place point) {
 		gate = new Gate(this, point);
 	}
 	
