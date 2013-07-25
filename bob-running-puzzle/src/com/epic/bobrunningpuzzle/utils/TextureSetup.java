@@ -1,9 +1,8 @@
 package com.epic.bobrunningpuzzle.utils;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class TextureSetup {
-	private TextureAtlas myTextures;
+	//FIXME private TextureAtlas myTextures;
 
 	public TextureSetup() {//TODO
 		/*TextureAtlas atlas;

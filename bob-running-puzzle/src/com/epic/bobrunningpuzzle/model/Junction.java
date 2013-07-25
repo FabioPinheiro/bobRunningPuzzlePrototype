@@ -22,7 +22,7 @@ public class Junction extends Surmountable{
 	
 	private GateType gateType1, gateType2, gateType3;
 	private Vector2 center;
-	private float radius, angle;
+	private float radius;
 	private BezierCurve curveAB, curveBC, curveCA;
 	private Road roadA, roadB, roadC;
 	
@@ -57,7 +57,6 @@ public class Junction extends Surmountable{
 	public Junction(Vector2 center, float radius, float angle, GateType gateType1, GateType gateType2, GateType gateType3) {
 		this.center = center;
 		this.radius = radius;
-		this.angle = angle;
 		
 		this.gateType1 = gateType1;
 		this.gateType2 = gateType2;
@@ -121,6 +120,7 @@ public class Junction extends Surmountable{
 	public float getRadius() {return radius;}
 	
 	
+	@SuppressWarnings("unused")//FIXME
 	private GateType convertStringInGateType(String srt){
 		//Implementation in JDK 7
 		/*switch (srt) {

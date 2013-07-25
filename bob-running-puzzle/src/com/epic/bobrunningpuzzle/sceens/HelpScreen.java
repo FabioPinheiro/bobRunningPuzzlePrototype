@@ -1,13 +1,9 @@
 package com.epic.bobrunningpuzzle.sceens;
 
-import aurelienribon.tweenengine.TweenManager;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
@@ -28,10 +23,10 @@ public class HelpScreen implements Screen {
 	private TextureAtlas atlas; // done
 	private Skin skin; // done
 	private Table table; // done
-	private TweenManager tweenManager;
+	//private TweenManager tweenManager;
 	private TextButton buttonBack; // 50%
-	private BitmapFont whiteFont, blackFont, whiteFont_mistral, blackFont_mistral; // done
-	private Label heading, heading_mistral;
+	private BitmapFont /*whiteFont,*/ blackFont;//, whiteFont_mistral, blackFont_mistral; // done
+	//private Label heading, heading_mistral;
 
 	private int width, height; // the width and height of the screen used by the
 								// Android touch events.
@@ -75,10 +70,10 @@ public class HelpScreen implements Screen {
 		//LIXO table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		// Creating Fonts
-		whiteFont = new BitmapFont(Gdx.files.internal("font/whiteFont.fnt"), false);
+		//whiteFont = new BitmapFont(Gdx.files.internal("font/whiteFont.fnt"), false);
 		blackFont = new BitmapFont(Gdx.files.internal("font/blackFont.fnt"), false);
-		whiteFont_mistral = new BitmapFont(Gdx.files.internal("font/whiteFont_mistral.fnt"), false);
-		blackFont_mistral = new BitmapFont(Gdx.files.internal("font/blackFont_mistral.fnt"), false);
+		//whiteFont_mistral = new BitmapFont(Gdx.files.internal("font/whiteFont_mistral.fnt"), false);
+		//blackFont_mistral = new BitmapFont(Gdx.files.internal("font/blackFont_mistral.fnt"), false);
 
 		// Creating Buttons
 		TextButtonStyle textButtonStyle = new TextButtonStyle();

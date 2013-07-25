@@ -1,9 +1,6 @@
 package com.epic.bobrunningpuzzle.view;
 
-import java.sql.Time;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,15 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
-import com.epic.bobrunningpuzzle.model.Alley;
-import com.epic.bobrunningpuzzle.model.Bob;
-import com.epic.bobrunningpuzzle.model.Gate;
-import com.epic.bobrunningpuzzle.model.Goal;
-import com.epic.bobrunningpuzzle.model.Junction;
 import com.epic.bobrunningpuzzle.model.Level;
-import com.epic.bobrunningpuzzle.model.Road;
-import com.epic.bobrunningpuzzle.model.Start;
-import com.epic.bobrunningpuzzle.model.Surmountable;
 
 public class WorldRenderer{
 
@@ -131,8 +120,9 @@ public class WorldRenderer{
 		this.cam.lookAt(x, y, 0);
 	}
 	
+	@SuppressWarnings("unused")//FIXME
 	private void camZoom() {
-		cam.zoom = 0.3f;
+		cam.zoom = 1f;
 		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#camZoom: this.cam.zoom:"+ this.cam.zoom);
 	}
 	private void camRotate() {

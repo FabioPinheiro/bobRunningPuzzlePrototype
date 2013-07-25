@@ -3,13 +3,9 @@ package com.epic.bobrunningpuzzle.model;
 import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.epic.Place;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
-import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
 public class Level implements ModelElement{
 	
@@ -27,7 +23,7 @@ public class Level implements ModelElement{
 			gameState = Level.GameState.INGAME;
 	}
 	public static void gameOver(boolean winner){
-		win = win;
+		win = winner;
 		gameState = Level.GameState.FINISH;
 	}
 	public static void gamePause(){

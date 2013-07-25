@@ -11,8 +11,6 @@ public class PlaceManager {
 	public static ArrayMap<String, Place> getMap() {return map;}
 	public static void setMap(ArrayMap<String, Place> map) {PlaceManager.map = map;}
 
-	private GenericIdentifier genericIdentifier = new GenericIdentifier();
-	
 	public static int sizeOfMap(){return PlaceManager.size1();}
 	private static int size1(){return PlaceManager.map.size;}
 	private static int size2(String key){return PlaceManager.map.get(key).size();}

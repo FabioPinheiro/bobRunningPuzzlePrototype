@@ -78,8 +78,8 @@ surmountableArray:[
 			gateB:{identifier:{subKey:"[ID_sub:1]",key:"[ID:11]"}},
 			vectorA:{x:0.65,y:6},
 			vectorB:{x:1,y:6.35}},
-			radius:0.7,
-			center:{x:1,y:6},
+		radius:0.7,
+		center:{x:1,y:6},
 		curveCA:{
 			debugID:curveAC,
 			bezierCurve:{points:[{x:1.7,y:6},{x:0.65,y:6},{x:1.35,y:6},{x:0.3,y:6}],tmp:{x:0.3,y:6}},
@@ -121,9 +121,8 @@ surmountableArray:[
 			gateB:{identifier:{subKey:"[ID_sub:1]",key:"[ID:17]"}},
 			vectorA:{x:5.5,y:6},
 			vectorB:{x:5,y:5.5}},
-			radius:1,
-			angle:180,
-			center:{x:5,y:6},
+		radius:1,
+		center:{x:5,y:6},
 		curveCA:{
 			debugID:curveAC,
 			bezierCurve:{points:[{x:4,y:6},{x:5.5,y:6},{x:4.5,y:6},{x:6,y:6}],tmp:{x:6,y:6}},

@@ -5,16 +5,13 @@ package com.epic.bobrunningpuzzle.sceens;
 //import com.me.myfirstgdxgame.view.WorldRenderer;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL10;
-import com.epic.PlaceManager;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
 import com.epic.bobrunningpuzzle.controller.GameController;
 import com.epic.bobrunningpuzzle.model.Level;
 import com.epic.bobrunningpuzzle.model.Level.GameState;
-import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.model.Surmountable;
+import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
 public class GameScreen implements Screen {
@@ -27,8 +24,6 @@ public class GameScreen implements Screen {
 	private GameController controller;
 	private float timer;
 	//private BobController controller;
-
-	private int width, height; // the width and height of the screen used by the Android touch events.
 	
 	public GameScreen() {
 		controller = new GameController();
@@ -86,8 +81,8 @@ public class GameScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		//FIXME worldRenderer.calculateSize();
-		this.width = width;
-		this.height = height;
+		//this.width = width;
+		//this.height = height;
 	}
 
 	@Override

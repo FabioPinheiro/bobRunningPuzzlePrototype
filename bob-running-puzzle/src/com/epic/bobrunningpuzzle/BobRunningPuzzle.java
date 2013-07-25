@@ -2,10 +2,6 @@ package com.epic.bobrunningpuzzle;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.epic.bobrunningpuzzle.sceens.SplashScreen;
 
@@ -13,10 +9,6 @@ public class BobRunningPuzzle extends Game {
 	
 	public static final String TITLE = "Bob Running Puzzle", VERSTION = "0.0.0.1";
 	public static final String GAMELOG = "BobRunningPuzzle-LOG", GAMELOG_RENDER = "BobRunningPuzzle-LOG_RENDER";
-	private OrthographicCamera camera;
-	private SpriteBatch batch;
-	private Texture texture;
-	private Sprite sprite;
 	
 	@Override
 	public void create() {

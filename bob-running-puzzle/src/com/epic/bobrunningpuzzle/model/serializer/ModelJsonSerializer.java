@@ -27,7 +27,7 @@ public class ModelJsonSerializer {
 	
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		ModelJsonSerializer x = new ModelJsonSerializer();
+		//ModelJsonSerializer x = new ModelJsonSerializer();
 		System.out.println("test ModelJsonSerializer");
 		//FileHandle file = Gdx.files.internal("ui/generalSkin.json");
 		File file = new File("E:/git/bobRunningPuzzle/bob-running-puzzle-android/assets/levels/level1.json");
