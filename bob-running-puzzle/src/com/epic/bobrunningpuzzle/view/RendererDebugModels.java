@@ -3,6 +3,8 @@ package com.epic.bobrunningpuzzle.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.epic.bobrunningpuzzle.model.Alley;
 import com.epic.bobrunningpuzzle.model.BezierCurve;
 import com.epic.bobrunningpuzzle.model.Bob;
@@ -47,19 +49,22 @@ public class RendererDebugModels implements RendererVisitor{
 	@Override
 	public void draw(BezierCurve el) {
 		debugShapeRenderer.setColor(new Color(1, 1, 0, 1));
-		debugShapeRenderer.line(
-				el.getGateA().getPosition().x, el.getGateA().getPosition().y,
-				el.getVectorA().x, el.getVectorA().y);
-		debugShapeRenderer.line(
-				el.getGateB().getPosition().x, el.getGateB().getPosition().y,
-				el.getVectorB().x, el.getVectorB().y);
-		//FIXME draw line to vertor's
-		debugShapeRenderer.curve(
-				el.getGateA().getPosition().x, el.getGateA().getPosition().y,
-				el.getVectorA().x, el.getVectorA().y,
-				el.getVectorB().x, el.getVectorB().y,
-				el.getGateB().getPosition().x, el.getGateB().getPosition().y,
-				BezierCurve.SEGMENTS);
+		for(int index=0; index < el.getBezierArray().size; index++){
+			Array<Vector2> pointsAux = el.getBezierArray().get(index).getBezierCurve().points;
+			debugShapeRenderer.line(
+					pointsAux.get(0).x, pointsAux.get(0).y,
+					pointsAux.get(1).x, pointsAux.get(1).y);
+			debugShapeRenderer.line(
+					pointsAux.get(3).x, pointsAux.get(3).y,
+					pointsAux.get(2).x, pointsAux.get(2).y);
+			//FIXME draw line to vertor's
+			debugShapeRenderer.curve(
+					pointsAux.get(0).x, pointsAux.get(0).y,
+					pointsAux.get(1).x, pointsAux.get(1).y,
+					pointsAux.get(2).x, pointsAux.get(2).y,
+					pointsAux.get(3).x, pointsAux.get(3).y,
+					BezierCurve.SEGMENTS);
+		}
 	}
 	
 	@Override

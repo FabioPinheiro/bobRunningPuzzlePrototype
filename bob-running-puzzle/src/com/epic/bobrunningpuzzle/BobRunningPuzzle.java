@@ -2,7 +2,6 @@ package com.epic.bobrunningpuzzle;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.epic.bobrunningpuzzle.sceens.GameScreenTest;
 import com.epic.bobrunningpuzzle.sceens.SplashScreen;
 
@@ -14,8 +13,8 @@ public class BobRunningPuzzle extends Game {
 	@Override
 	public void create() {
 		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"----START");
-		//setScreen(new SplashScreen());
-		setScreen(new GameScreenTest());
+		setScreen(new SplashScreen());
+		//setScreen(new GameScreenTest());
 	}
 
 	@Override
