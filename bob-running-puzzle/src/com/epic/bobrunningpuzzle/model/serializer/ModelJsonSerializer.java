@@ -9,11 +9,11 @@ import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.ArrayMap.Entries;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
-import com.epic.Place;
-import com.epic.PlaceManager;
-import com.epic.PlaceManager.GenericIdentifier;
 import com.epic.bobrunningpuzzle.model.Gate;
-import com.epic.bobrunningpuzzle.model.LevelStructure;
+import com.epic.bobrunningpuzzle.model.auxiliary.LevelStructure;
+import com.epic.bobrunningpuzzle.model.auxiliary.Place;
+import com.epic.bobrunningpuzzle.model.auxiliary.PlaceManager;
+import com.epic.bobrunningpuzzle.model.auxiliary.PlaceManager.GenericIdentifier;
 /**
  * 
  * @author Fábio Pinheiro

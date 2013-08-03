@@ -1,4 +1,4 @@
-package com.epic;
+package com.epic.bobrunningpuzzle.model.auxiliary;
 
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 

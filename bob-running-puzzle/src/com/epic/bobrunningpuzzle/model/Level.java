@@ -4,16 +4,25 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
+import com.epic.bobrunningpuzzle.model.auxiliary.LevelStructure;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
 public class Level implements ModelElement{
-	
-	
 	public enum GameState {START, INGAME, PAUSE, FINISH};
 	
 	private static GameState gameState = GameState.START; //FIXME não gosta!!!!!!!!!!!!!!!
 	private static boolean win;
+	private Bob bob;
+	private LevelStructure levelStructure = new LevelStructure();
+	
+	public Bob getBob() {return bob;}
+	/**{@link LevelStructure#getWidth()}*/
+	public float getWidth() {return this.levelStructure.getWidth();}
+	/**{@link LevelStructure#getHeight()}*/
+	public float getHeight() {return this.levelStructure.getHeight();}
+	/**{@link LevelStructure#getStartTimer()}*/
+	public float getStartTimer() {return this.levelStructure.getStartTimer();}
 	
 	public static GameState getGameState() {return gameState;}
 	public static boolean isWin() {return win;}
@@ -27,27 +36,23 @@ public class Level implements ModelElement{
 		gameState = Level.GameState.FINISH;
 	}
 	public static void gamePause(){
-		if(gameState == GameState.INGAME)
+		if(gameState == GameState.INGAME){
 			gameState = Level.GameState.PAUSE;
-		else if(gameState == GameState.PAUSE)
+			Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, "Level:"+"#gamePause : gameState = Level.GameState.PAUSE !!!!!!!!!!!!!!!!!!!! = " + getGameState().toString());
+		}
+		else if(gameState == GameState.PAUSE){
 			gameState = Level.GameState.INGAME;
-		Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, "Level:"+"#gamePause !!!!!!!!!!!!!!!!!!!! = " + getGameState().toString());
+			Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, "Level:"+"#gamePause : gameState = Level.GameState.INGAME;!!!!!!!!!!!!!!!!!!!! = " + getGameState().toString());
+		}
 	}
-	
-	private Bob bob;
-	public Bob getBob() {return bob;}
-	private LevelStructure levelStructure = new LevelStructure();
-	/**{@link LevelStructure#getWidth()}*/
-	public float getWidth() {return this.levelStructure.getWidth();}
-	/**{@link LevelStructure#getHeight()}*/
-	public float getHeight() {return this.levelStructure.getHeight();}
-	/**{@link LevelStructure#getStartTimer()}*/
-	public float getStartTimer() {return this.levelStructure.getStartTimer();}
-	
 	
 	/** Used only FIXME by de Serializer {@link ModelJsonSerializer}*/
 	public Level() {
 		Gdx.app.log(BobRunningPuzzle.GAMELOG, "##########################################");
+	}
+	
+	public void load(LevelStructure levelStructure){
+		this.levelStructure = levelStructure;
 		this.bob= new Bob(this.getStart().getGate());
 	}
 	

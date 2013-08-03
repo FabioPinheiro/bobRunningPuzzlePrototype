@@ -1,4 +1,4 @@
-package com.epic;
+package com.epic.bobrunningpuzzle.model.auxiliary;
 import java.lang.StrictMath;
 
 import com.badlogic.gdx.math.Vector2;

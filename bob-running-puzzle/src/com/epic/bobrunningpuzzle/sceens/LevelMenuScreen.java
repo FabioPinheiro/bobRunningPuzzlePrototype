@@ -1,5 +1,7 @@
 package com.epic.bobrunningpuzzle.sceens;
 
+import sun.reflect.generics.tree.BottomSignature;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,8 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.epic.bobrunningpuzzle.BobRunningPuzzle;
+import com.epic.bobrunningpuzzle.model.StraightLine;
 
 public class LevelMenuScreen implements Screen {
 	
@@ -23,7 +27,6 @@ public class LevelMenuScreen implements Screen {
 	private TextureAtlas atlas;
 	private Skin skin;
 	private Table table;
-	private List list;
 	private ScrollPane scrollPane;
 	private TextButton buttonPlay, buttonBack;
 
@@ -65,8 +68,7 @@ public class LevelMenuScreen implements Screen {
 		table.debug();
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		list = new List(new String [] {"one","two","three","aefasfasfdsadsadasdasdsds","one","two","three","one","two","three","one","two","three"}, skin);
-		scrollPane = new ScrollPane(list, skin);
+		scrollPane = new ScrollPane(this.getLevelsList(), skin);
 		scrollPane.setOverscroll(false, false);
 		scrollPane.setScrollingDisabled(true, false);
 		
@@ -137,6 +139,14 @@ public class LevelMenuScreen implements Screen {
 		table.add(scrollPane).uniformX().expandY().top().left();
 		table.add(buttonPlay).uniformX();
 		table.add(buttonBack).uniformX().bottom().right();
+	}
+	
+	private List getLevelsList() {
+		String[] aux = new String[1];
+		for(int i = 0; i < aux.length ; i++){
+			aux[i] = new String("Level1");
+		}
+		return new List(aux, skin);
 	}
 
 }

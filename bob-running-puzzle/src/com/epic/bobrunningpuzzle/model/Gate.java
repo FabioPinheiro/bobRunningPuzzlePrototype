@@ -4,9 +4,9 @@
 package com.epic.bobrunningpuzzle.model;
 
 import com.badlogic.gdx.math.Vector2;
-import com.epic.Place;
-import com.epic.PlaceIdentifier;
-import com.epic.PlaceManager;
+import com.epic.bobrunningpuzzle.model.auxiliary.Place;
+import com.epic.bobrunningpuzzle.model.auxiliary.PlaceIdentifier;
+import com.epic.bobrunningpuzzle.model.auxiliary.PlaceManager;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
 
@@ -76,8 +76,7 @@ public class Gate implements ModelElement{//extends Surmountable{
 		return "Gate:: this.getKey():" + this.getKey() +
 				"; point:" + getPosition().toString()+
 				"; surmountable:" + surmountable.toString() +
-				"; pairGateA" + getPairGateA() +//FIXME
-				"; pairGateB" + getPairGateB();//FIXME
+				"; pairGateA" + getPairGateA();//FIXME + "; pairGateB" + getPairGateB();//FIXME
 	}
 	
 	/*

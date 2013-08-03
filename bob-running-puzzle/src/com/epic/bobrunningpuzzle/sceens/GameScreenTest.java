@@ -14,7 +14,7 @@ import com.epic.bobrunningpuzzle.model.Surmountable;
 import com.epic.bobrunningpuzzle.model.auxiliary.LevelStructure;
 import com.epic.bobrunningpuzzle.view.WorldRenderer;
 
-public class GameScreen implements Screen {
+public class GameScreenTest implements Screen {
 	
 	public static final float StartToZoomInTheTraveler = 3f;
 
@@ -25,12 +25,12 @@ public class GameScreen implements Screen {
 	private float timer;
 	//private BobController controller;
 	
-	public GameScreen() {
+	public GameScreenTest() {
 		controller = new GameController();
 		Surmountable.setController(controller);
 		level = new Level();
 		LevelStructure levelStructureAux = new LevelStructure();
-		levelStructureAux.chargeLevel1();
+		levelStructureAux.chargeLevel2();
 		level.load(levelStructureAux);
 		
 		worldRenderer = new WorldRenderer(level, true);
@@ -49,7 +49,8 @@ public class GameScreen implements Screen {
 		}else if(Level.getGameState() == GameState.PAUSE){
 			//FIXME show PAUSE
 		}else if(Level.getGameState() == GameState.START){
-			timer -=delta;
+			//FIXME $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+			//timer -=delta;
 			if(timer <= 0){
 				timer = 0;
 				Level.gameStart();

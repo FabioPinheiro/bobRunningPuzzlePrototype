@@ -1,10 +1,16 @@
-package com.epic.bobrunningpuzzle.model;
+package com.epic.bobrunningpuzzle.model.auxiliary;
 
 import java.util.Iterator;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.epic.Place;
+import com.epic.bobrunningpuzzle.model.BezierCurve;
+import com.epic.bobrunningpuzzle.model.Goal;
+import com.epic.bobrunningpuzzle.model.Junction;
+import com.epic.bobrunningpuzzle.model.Road;
+import com.epic.bobrunningpuzzle.model.Start;
+import com.epic.bobrunningpuzzle.model.StraightLine;
+import com.epic.bobrunningpuzzle.model.Surmountable;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 
 public class LevelStructure {
@@ -54,6 +60,12 @@ public class LevelStructure {
 
 	/** Used only by de Serializer {@link ModelJsonSerializer}*/
 	public LevelStructure() {
+		
+	}
+	
+	public void chargeLevel1(){
+		this.surmountableArray.clear();
+		this.surmountableStartsArray.clear();
 		this.setWindowSizeAndTimer(6f, 10f, 10f);
 		
 		Start start = new Start(new Place(0,0));
@@ -82,6 +94,17 @@ public class LevelStructure {
 		
 		Goal goal1 = new Goal(junctuin1.getGateA());
 		this.surmountableArray.add(goal1);
+	}
+	
+	
+	public void chargeLevel2(){
+		this.surmountableArray.clear();
+		this.surmountableStartsArray.clear();
+		this.setWindowSizeAndTimer(6f, 30f, 16f);
+		
+		Start start = new Start(new Place(1,15));
+		this.surmountableStartsArray.add(start);
+		
 	}
 	
 

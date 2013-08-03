@@ -1,8 +1,8 @@
-package com.epic;
+package com.epic.bobrunningpuzzle.model.auxiliary;
 
 import com.badlogic.gdx.utils.ArrayMap;
-import com.epic.Place;
 import com.epic.bobrunningpuzzle.model.Gate;
+import com.epic.bobrunningpuzzle.model.auxiliary.Place;
 
 public class PlaceManager {
 	///** Class with private constructor is static.*/

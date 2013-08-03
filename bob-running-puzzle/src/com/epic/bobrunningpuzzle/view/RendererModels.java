@@ -55,7 +55,6 @@ public class RendererModels implements RendererVisitor{
 	@Override
 	public void draw(Level level) {
 		//Gdx.app.log(BobRunningPuzzle.GAMELOG_RENDER, this.getClass().getName()+"#drawLevel");
-		Gdx.app.error("ERROR!!", "drawLevel- nunca devia chegar aqui!!!! devido ao visitor");//FIXME
 	}
 	@Override
 	public void draw(Road el) {

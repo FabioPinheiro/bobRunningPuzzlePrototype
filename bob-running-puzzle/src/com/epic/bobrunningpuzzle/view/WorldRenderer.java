@@ -162,7 +162,7 @@ public class WorldRenderer{
 			Gdx.app.error("ERROR!!",  this.getClass().getName()+"#camRotate: (camAngle > 360)  this.camAngle=" + this.camAngle);
 			camAngle -= 360;
 		}
-		Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#camRotate: this.camAngle:"+ this.camAngle + "  aux=" + aux);
+		//Gdx.app.log(BobRunningPuzzle.GAMELOG, this.getClass().getName()+"#camRotate: this.camAngle:"+ this.camAngle + "  aux=" + aux);
 	}
 
 
