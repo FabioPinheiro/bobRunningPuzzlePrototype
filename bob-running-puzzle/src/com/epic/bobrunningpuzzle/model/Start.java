@@ -31,6 +31,8 @@ public class Start extends Surmountable {
 
 	@Override
 	public void calculateAndUpdatePosition(Traveler traveler, Vector2 out) {
+		Vector2 aux = this.getGate().getPosition();
+		out.set(aux.x, aux.y);
 		Gdx.app.error("ERROR!!", this.getClass().getName()+"#calculateAndUpdatePosition- nunca devia chegar aqui!!!!");
 	}
 	

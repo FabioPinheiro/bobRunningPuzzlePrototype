@@ -22,7 +22,7 @@ public class PlaceManager {
 			Gdx.app.log("POINT", "map.getKeyAt(i): " + map.getValueAt(i).getLst().size());
 		}
 	}*/
-	public static Place getPoint(String key){return PlaceManager.map.get(key);}
+	public static Place getPlace(String key){return PlaceManager.map.get(key);}
 	
 	public static String add(Place point) {
 		String aux = PlaceManager.GenericIdentifier.newIdentifier();
@@ -31,7 +31,7 @@ public class PlaceManager {
 	}
 	
 	public static PlaceIdentifier register(String key, Gate gate) {
-		return PlaceManager.getPoint(key).register(gate);
+		return PlaceManager.getPlace(key).register(gate);
 	}
 	
 	public static class GenericIdentifier {

@@ -20,7 +20,7 @@ public class Goal extends Surmountable {
 	}
 	
 	public Goal(Gate gatePair) {
-		this.gate = new Gate(this, gatePair.getThisGatePoint());
+		this.gate = new Gate(this, gatePair.getThisGatePlace());
 	}
 	
 	

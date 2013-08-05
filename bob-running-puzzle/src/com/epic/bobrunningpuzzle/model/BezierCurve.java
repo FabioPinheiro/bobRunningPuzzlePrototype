@@ -3,6 +3,7 @@ package com.epic.bobrunningpuzzle.model;
 import com.badlogic.gdx.math.Bezier;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.epic.bobrunningpuzzle.model.auxiliary.ComplexPosition;
 import com.epic.bobrunningpuzzle.model.auxiliary.Place;
 import com.epic.bobrunningpuzzle.model.serializer.ModelJsonSerializer;
 import com.epic.bobrunningpuzzle.view.RendererVisitor;
@@ -38,6 +39,7 @@ public class BezierCurve extends Road{
 		}
 	}
 	
+	
 	public static final int SEGMENTS = 100;
 	
 	private Array<BezierAux> bezierArray = new Array<BezierCurve.BezierAux>();
@@ -65,26 +67,77 @@ public class BezierCurve extends Road{
 		this(positionA, vector, vector, positionB, debugID);
 	}*/
 	public BezierCurve(Gate pairGateA, Vector2 vectorA, Vector2 vectorB, Place point, String debugID){
-		this(pairGateA.getThisGatePoint(), vectorA, vectorB, point, debugID);
+		this(pairGateA.getThisGatePlace(), vectorA, vectorB, point, debugID);
 	}
 	public BezierCurve(Gate gatePairA, Vector2 vectorA, Vector2 vectorB, Gate gatePairB, String debugID){
-		this(gatePairA.getThisGatePoint(), vectorA, vectorB, gatePairB.getThisGatePoint(), debugID);
+		this(gatePairA.getThisGatePlace(), vectorA, vectorB, gatePairB.getThisGatePlace(), debugID);
 	}
 	
 	/**
 	 * Constructor for multiple curves
-	 * @param pointA FIXME the position of this point must be equal to the positons of the first vectors element
+	 * @param pointA the position of this point must be equal to the positons of the first vectors element
 	 * @param vectors must be multiplo of 4 {@link Vector2}, by the  respective order, starting point, direction of departure, direction of arrival, arrival point
-	 * @param pointB FIXME the position of this point must be equal to the positons of the last vectors element
+	 * @param pointB the position of this point must be equal to the positons of the last vectors element
 	 * @param debugID
 	 */
-	public BezierCurve(Place pointA, Array<Vector2> vectors, Place pointB, String debugID){
+	private BezierCurve(Place pointA, Array<Vector2> vectors, Place pointB, String debugID){
 		super(pointA, pointB, debugID);
 		if(!(vectors.size % 4 == 0) || !vectors.first().equals(pointA.getPosition()) || !vectors.get(vectors.size-1).equals(pointB.getPosition()))
-			throw new RuntimeException();
+			throw new RuntimeException("vectors must be multiplo of 4");//FIXME RuntimeException
 		for(int index = 0; index < vectors.size; index +=4){
 			Vector2 pointsAux[] = {vectors.get(index), vectors.get(index+1), vectors.get(index+2) ,vectors.get(index+3)};
 			this.bezierArray.add(new BezierAux(pointsAux));
+		}
+	}
+	
+//	/** FIXME//
+//	 * 
+//	 * @param pointA starting point
+//	 * @param pointB arrival point
+//	 * @param debugID
+//	 * @param points must be ((multiplo of 3) + 2) {@link Vector2}, by the  respective order, direction of departure, {starting point, direction of departure, direction of arrival, arrival point}, direction of arrival.
+//	 */
+//	public BezierCurve(Place pointA, Place pointB, String debugID, Vector2 ... points){
+//		super(pointA, pointB, debugID);
+//		if(!((points.length - 2) % 3 == 0))
+//			throw new RuntimeException("points +2 must be multiplo of 3: points.length=" + points.length);//FIXME RuntimeException
+//		if(points.length == 2){
+//			Vector2 pointsAux1[] = {pointA.getPosition(), points[0], points[1] ,pointB.getPosition()};
+//			this.bezierArray.add(new BezierAux(pointsAux1));
+//		}else{
+//			Vector2 pointsAux2[] = {pointA.getPosition(), points[0], points[1] ,points[2]};
+//			this.bezierArray.add(new BezierAux(pointsAux2));
+//			for(int index = 2; index < points.length-3; index +=3){
+//				Vector2 pointsAux3[] = {points[index], points[index+1], points[index+2] ,points[index+3]};
+//				this.bezierArray.add(new BezierAux(pointsAux3));
+//			}
+//			Vector2 pointsAux4[] = {points[points.length-3], points[points.length-2] ,points[points.length-1],pointB.getPosition()};
+//			this.bezierArray.add(new BezierAux(pointsAux4));
+//		}
+//	}
+	
+	public BezierCurve(Place pointA, Vector2 vectorA, Vector2 vectorB, Place pointB, String debugID, ComplexPosition ... complexPositions){
+		super(pointA, pointB, debugID);
+		if(complexPositions.length == 0){
+			Vector2 pointsAux1[] = {pointA.getPosition(), vectorA, vectorB ,pointB.getPosition()};
+			this.bezierArray.add(new BezierAux(pointsAux1));
+		}else{
+			Vector2 pointsAux2[] = {pointA.getPosition(), vectorA, complexPositions[0].entryPoint() , complexPositions[0].centerPoint()};
+			this.bezierArray.add(new BezierAux(pointsAux2));
+			for(int index = 0; index < complexPositions.length-1; index ++){
+				Vector2 pointsAux3[] = {
+						complexPositions[index].centerPoint(),
+						complexPositions[index].exitPoint(),
+						complexPositions[index +1].entryPoint(),
+						complexPositions[index +1].centerPoint() };
+				this.bezierArray.add(new BezierAux(pointsAux3));
+			}
+			Vector2 pointsAux4[] = {
+					complexPositions[complexPositions.length-1].centerPoint(),
+					complexPositions[complexPositions.length-1].exitPoint(),
+					vectorB,
+					pointB.getPosition() };
+			this.bezierArray.add(new BezierAux(pointsAux4));
 		}
 	}
 	
@@ -96,6 +149,11 @@ public class BezierCurve extends Road{
 
 	@Override
 	public void updateTraveler(float delta, Traveler traveler) {
+//		float remainingDelta = traveler.updatesStateTraveler(this.getLength(), delta);
+//		if(remainingDelta != 0f){
+//			throw new RuntimeException();
+//			//traveler.surmountableTransition(this.getOtherGate(traveler.getEntryGate()).getPairGate(),remainingDelta);
+//		}
 		super.updateTraveler(delta, traveler);
 	}
 
@@ -107,17 +165,26 @@ public class BezierCurve extends Road{
 	
 	@Override
 	public void calculateAndUpdatePosition(Traveler traveler, Vector2 out) {
-		float tAux = traveler.getT();
-		for(int index = 0; index< bezierArray.size; index++){
-			if(traveler.getEntryGate().equals(this.getGateA())){
-					if(tAux > bezierArray.get(index).getLength())
-						tAux -= bezierArray.get(index).getLength() / this.getCurveTotalLength();
-					else bezierArray.get(index).getBezierCurve().valueAt(out, tAux);
+		float percentageTraveled = traveler.getT();
+		float distanceAux = percentageTraveled * this.getCurveTotalLength();
+		if(traveler.getEntryGate().equals(this.getGateA())){
+			for(int index = 0; index< bezierArray.size; index++){
+				if(distanceAux > bezierArray.get(index).getLength())
+					distanceAux -= bezierArray.get(index).getLength();
+				else {
+					bezierArray.get(index).getBezierCurve().valueAt(out, distanceAux/bezierArray.get(index).getLength());
+					break;
+				}
 			}
-			else{
-					if(tAux > bezierArray.get(1-index).getLength())
-						tAux -= bezierArray.get(1-index).getLength() / this.getCurveTotalLength();
-					else bezierArray.get(1-index).getBezierCurve().valueAt(out, 1-tAux);
+		}
+		else{
+			for(int index = bezierArray.size-1; index >= 0; index--){
+				if(distanceAux > bezierArray.get(index).getLength())
+					distanceAux -= bezierArray.get(index).getLength();
+				else {
+					bezierArray.get(index).getBezierCurve().valueAt(out, distanceAux/bezierArray.get(index).getLength());
+					break;
+				}
 			}
 		}
 	}

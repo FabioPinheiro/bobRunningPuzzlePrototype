@@ -21,7 +21,7 @@ public class Gate implements ModelElement{//extends Surmountable{
 	
 	public String getKey() {return this.identifier.getKey();}
 	
-	public Place getThisGatePoint(){return PlaceManager.getPoint(this.getKey());}
+	public Place getThisGatePlace(){return PlaceManager.getPlace(this.getKey());}
 	
 	
 	/** Used only by de Serializer {@link ModelJsonSerializer}*/
@@ -38,8 +38,8 @@ public class Gate implements ModelElement{//extends Surmountable{
 		this(surmountable, point.getKey());
 	}
 	
-	public boolean isActivated(){return this.getThisGatePoint().size() > 1;}
-	public boolean isComplex() {return this.getThisGatePoint().size() > 2;}
+	public boolean isActivated(){return this.getThisGatePlace().size() > 1;}
+	public boolean isComplex() {return this.getThisGatePlace().size() > 2;}
 	
 	//get and set and is
 	public Gate getPairGate() {
@@ -47,10 +47,10 @@ public class Gate implements ModelElement{//extends Surmountable{
 			return this.getPairGateB();
 		else return this.getPairGateA();
 	}
-	public Gate getPairGateA() {return PlaceManager.getPoint(this.getKey()).getOtherGateIndex(this,0);}
-	public Gate getPairGateB() {return PlaceManager.getPoint(this.getKey()).getOtherGateIndex(this,1);}
+	public Gate getPairGateA() {return PlaceManager.getPlace(this.getKey()).getOtherGateIndex(this,0);}
+	public Gate getPairGateB() {return PlaceManager.getPlace(this.getKey()).getOtherGateIndex(this,1);}
 	public Surmountable getSurmountable() 	{return surmountable;}
-	public Vector2 getPosition() 			{return this.getThisGatePoint().getPosition();}
+	public Vector2 getPosition() 			{return this.getThisGatePlace().getPosition();}
 
 	@Override
 	public void update(float delta) {

@@ -13,7 +13,8 @@ public abstract class Traveler implements ModelElement{
 	
 	public Traveler(Gate entryGate) {
 		this.setEntryGate(entryGate);
-		this.calculatePosition(); //XXX can i do this now?: ERROR!!: com.epic.bobrunningpuzzle.model.Start#calculateAndUpdatePosition- nunca devia chegar aqui!!!!
+		//this.calculatePosition(); //XXX can i do this now?: ERROR!!: com.epic.bobrunningpuzzle.model.Start#calculateAndUpdatePosition- nunca devia chegar aqui!!!!
+		setPosition(entryGate.getPosition());
 	}
 	
 	//LIXO public class TravelerState { 	private TravelerState travelerState;
@@ -35,7 +36,10 @@ public abstract class Traveler implements ModelElement{
 	public void setT(float t) {this.t = t;}
 	//public void addT(float alpha) {this.t += alpha;}	
 	public Vector2 getPosition() {return position;}
-	public void setPosition(Vector2 position) {this.position = position;}
+	public void setPosition(Vector2 position) {
+		this.position.set(position);
+		this.oldPosition.set(position);
+	}
 	public Vector2 getDirection() {
 		return position.cpy().sub(oldPosition).clamp(1f, 1f);
 	}

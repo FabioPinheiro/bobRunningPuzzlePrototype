@@ -105,6 +105,20 @@ public class LevelStructure {
 		Start start = new Start(new Place(1,15));
 		this.surmountableStartsArray.add(start);
 		
+		/*BezierCurve curve1 = new BezierCurve(start.getGate().getThisGatePlace(), new Place(2,2), "curve1", new Vector2(2,15),
+				new Vector2(3,15), new Vector2(4,14), new Vector2(5,13),
+				new Vector2(4,10), new Vector2(5,10), new Vector2(6,10),
+				new Vector2(7,11), new Vector2(6,12), new Vector2(4,14),
+				new Vector2(2,-5));
+		*/
+		
+		BezierCurve curve1 = new BezierCurve(
+				start.getGate().getThisGatePlace(), new Vector2(2, 15),
+				new Vector2(9, 13), new Place(10, 13), "curve1",
+				new ComplexPosition(new Vector2(4, 14), -45, 2, 5),
+				new ComplexPosition(new Vector2(7, 6), 180, 2, 1),
+				new ComplexPosition(new Vector2(5, 10), 45, 1, 5));
+		this.surmountableArray.add(curve1);
 	}
 	
 

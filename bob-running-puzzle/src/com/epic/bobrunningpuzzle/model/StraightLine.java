@@ -16,10 +16,10 @@ public class StraightLine extends Road{
 		super(positionA, positionB, debugID);
 	}
 	public StraightLine(Gate gatePairA, Place pointB, String debugID) {
-		super(gatePairA.getThisGatePoint(), pointB, debugID);
+		super(gatePairA.getThisGatePlace(), pointB, debugID);
 	}
 	public StraightLine(Gate gatePairA, Gate gatePairB, String debugID) {
-		super(gatePairA.getThisGatePoint(), gatePairB.getThisGatePoint(), debugID);
+		super(gatePairA.getThisGatePlace(), gatePairB.getThisGatePlace(), debugID);
 	}
 	
 	@Override

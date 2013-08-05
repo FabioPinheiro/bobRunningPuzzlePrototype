@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
 		Surmountable.setController(controller);
 		level = new Level();
 		LevelStructure levelStructureAux = new LevelStructure();
-		levelStructureAux.chargeLevel1();
+		levelStructureAux.chargeLevel2();
 		level.load(levelStructureAux);
 		
 		worldRenderer = new WorldRenderer(level, true);

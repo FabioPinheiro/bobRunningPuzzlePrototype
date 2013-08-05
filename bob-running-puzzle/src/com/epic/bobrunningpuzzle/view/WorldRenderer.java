@@ -127,10 +127,9 @@ public class WorldRenderer{
 	}
 	private void camRotate() {
 		float aux = level.getBob().getDirectionAngle()-camAngle;
-		
 		if(Math.abs(aux) > 180){
 			if(aux > 180) aux -= 360f;
-			if(aux < 180) aux += 360f;
+			if(aux < -180) aux += 360f;
 			if(Math.abs(aux) > 45){ //DEGUB LIXO FIXME I (Fabio) don't like this!!
 				Gdx.app.error("ERROR!!",  this.getClass().getName()+"#camRotate: \"Level too sharp\" aux=" + aux);
 			}
