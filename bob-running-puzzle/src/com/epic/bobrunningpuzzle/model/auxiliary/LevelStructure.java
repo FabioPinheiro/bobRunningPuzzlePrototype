@@ -119,6 +119,12 @@ public class LevelStructure {
 				new ComplexPosition(new Vector2(7, 6), 180, 2, 1),
 				new ComplexPosition(new Vector2(5, 10), 45, 1, 5));
 		this.surmountableArray.add(curve1);
+		
+		
+		BezierCurve curve2 = new BezierCurve(
+				start.getGate().getThisGatePlace(), new Vector2(0, 0),
+				new Vector2(0, 0), curve1.getGateB().getThisGatePlace(), "curve2");
+		this.surmountableArray.add(curve2);
 	}
 	
 

@@ -182,7 +182,7 @@ public class BezierCurve extends Road{
 				if(distanceAux > bezierArray.get(index).getLength())
 					distanceAux -= bezierArray.get(index).getLength();
 				else {
-					bezierArray.get(index).getBezierCurve().valueAt(out, distanceAux/bezierArray.get(index).getLength());
+					bezierArray.get(index).getBezierCurve().valueAt(out, 1-(distanceAux/bezierArray.get(index).getLength()));
 					break;
 				}
 			}
